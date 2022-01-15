@@ -60,6 +60,7 @@ def parse1(df) :
 
     return href
 
+
 # 검색 결과 첫번째 항목의 연결 페이지에서 도서분류 얻기
 def parse2(href) :
 
