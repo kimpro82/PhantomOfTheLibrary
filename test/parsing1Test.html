@@ -1,0 +1,2005 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>
+%28%EA%B8%88%EB%82%9C%EC%83%88%EC%9D%98%29%20%ED%81%B4%EB%9E%98%EC%8B%9D%20%EC%97%AC%ED%96%89 검색결과, 책 검색 : 네이버 책</title>
+<meta property="og:type" content="article"/>
+<meta property="og:title" content="네이버 책: '%28%EA%B8%88%EB%82%9C%EC%83%88%EC%9D%98%29%20%ED%81%B4%EB%9E%98%EC%8B%9D%20%EC%97%AC%ED%96%89' 검색결과"/>
+<meta property="og:url" content="http://book.naver.com/search/search.naver?query=%2528%25EA%25B8%2588%25EB%2582%259C%25EC%2583%2588%25EC%259D%2598%2529%2520%25ED%2581%25B4%25EB%259E%2598%25EC%258B%259D%2520%25EC%2597%25AC%25ED%2596%2589"/>
+<meta property="og:image" content="https://ssl.pstatic.net/static/m/book/icons/book_og_270x270.png"/>
+<meta property="og:description" content="책으로 만나는 새로운 세상"/>
+<meta property="og:article:thumbnailUrl" content=""/>
+<meta property="og:article:author" content="네이버 책"/>
+<meta property="og:article:author:url" content="https://book.naver.com"/>
+<link rel="shortcut icon" href="https://www.naver.com/favicon.ico?book" type="image/x-icon">
+<script type="text/javascript">
+var __bLogin = false;
+var __bAdult = false;
+</script>
+<link rel="stylesheet" type="text/css" href="/css/release/base_20211207091736.css">
+		<script type="text/javascript" src="/js/release/base_20211207091736.js" charset="UTF-8"></script>
+		<link rel="stylesheet" type="text/css" href="/css/release/comment_20211207091736.css">
+			<script type="text/javascript" src="/js/release/comment_20211207091736.js"></script>
+		<script type="text/javascript">
+	// document.domain ="naver.com";
+	var g_stab = "nexersh";
+</script>
+<script type="text/javascript">
+
+
+	var nsc = "";
+
+
+var gnb_service = "book";
+var gnb_logout = encodeURIComponent("https://nid.naver.com/nidlogin.login");
+var gnb_template = "gnb_utf8";
+var gnb_searchbox = "off";
+var gnb_shortnick = "off";
+var gnb_brightness = 1;
+
+var smartSearch = ""; 
+var detailSearchEvents = {};	
+var initDetailSearchCate = false; 
+jindo.$Fn(function() {
+	
+	var ajax = jindo.$Ajax("/search/detail_search_form_ajax.naver", {
+		type : 'xhr',
+		onload : function(res) {
+			jindo.$Element("detailSearchLayer").html(res.text());
+		}
+	});
+	ajax.request();
+	
+	detailSearchEvents["btn_detail_search"] = makeEventHandler(toggleDetailSearch, jindo.$("btn_detail_search"), "click");
+	
+	if (jindo.$Agent().navigator().ie) {
+		var KEY_CODE_ENTER = 13;
+		jindo.$A(jindo.$$("input[type=text]", jindo.$("detailSearchLayer"))).forEach( function(ele) {
+			detailSearchEvents[ele.name] = makeEventHandler( function(e) {
+				if (e.key().keyCode == KEY_CODE_ENTER) {
+					if (detailSearch(e)) {
+						jindo.$("detailSearchForm").submit();
+					}
+				}
+			}, ele, "keydown");
+		});
+	}
+
+	jindo.$Fn(function(){
+		for ( var x in detailSearchEvents ) {
+			if (detailSearchEvents[x] && detailSearchEvents[x].detachEvent) {
+	  			detailSearchEvents[x].detachEvent();
+			}
+		}
+	}).attach(window, "unload");
+
+	var showTab = '';
+	if ( showTab == "" && self.location.hash == "" ) {
+		jindo.$("startPoint").focus();
+	}
+	
+	if(jindo.$("last_tab_cp_sub") != null) {
+		jindo.$Fn(focusThisBestSellerLastTabCpSub).attach(jindo.$("last_tab_cp_sub"), "keydown");
+	}
+	jindo.$Fn(focusThisBestSellerTabCpSpt).attach(jindo.$$("a[id^=tab_cp_spt_]"), "keydown");
+	
+	jindo.$Fn(function(e) {
+		var gnbLayer = jindo.$Element("gnb");
+		var eventElement = jindo.$Element(e.element);
+		
+		if(eventElement.isChildOf(gnbLayer) == false) {
+			gnbAllLayerClose();
+		}
+	}).attach(document.body, "click");
+}).attach(window, "load");
+
+function focusThisBestSellerLastTabCpSub(event) {
+	var key = event.key();
+	var TAB_KEY_CODE = 9;
+	if (key.shift == false && key.keyCode == TAB_KEY_CODE) {
+		var cpCategory = jindo.$$("#bestseller_tab > ul.tab_cp_spt > li.selected")[0];
+		var nextCpCategory = jindo.$Element(cpCategory).next();
+		if (nextCpCategory != null) {
+			var className = nextCpCategory.first().className().split(" ")[0];
+			jindo.$$("#bestseller_tab > ul.tab_cp_spt > li > a." + className)[0].focus();
+		} else {
+			nextFocusSelect("fist_thisBestseller_img");
+		}
+		event.stopDefault();
+	}
+}
+
+function focusThisBestSellerTabCpSpt(event) {
+		var key = event.key();
+		var TAB_KEY_CODE = 9;
+		if (key.shift == false && key.keyCode == TAB_KEY_CODE) {
+			var parentNode = jindo.$(event).currentElement.parentNode;
+			if ( jindo.$Element(parentNode).hasClass("selected") == true) {
+				nextFocusSelect("first_tab_cp_sub");
+				event.stopDefault();
+			} else {
+				if(jindo.$Element(parentNode).next() == null) {
+					nextFocusSelect("fist_thisBestseller_img");
+					event.stopDefault();
+				}
+			}	
+		}
+}
+function searchList(searchFormId) {
+	document.getElementById(searchFormId).action = "/search/search.naver"
+	document.getElementById(searchFormId).target = "_self"
+	document.getElementById(searchFormId).acceptCharset = 'utf-8';
+	document.charset = "utf-8";
+	document.getElementById(searchFormId).submit();
+	return false;
+}
+
+function goNaverSearch(searchFormId) {
+	document.getElementById(searchFormId).action = "http://search.naver.com/search.naver?where=nexearch&frm=t1&sm=svc_nrs";
+	document.getElementById(searchFormId).target = "_blank";
+	document.getElementById(searchFormId).acceptCharset = 'euc-kr';
+	document.charset = "euc-kr";
+	document.getElementById(searchFormId).submit();
+
+	//init
+	document.getElementById(searchFormId).acceptCharset = 'utf-8';
+	document.charset = "utf-8";
+	document.getElementById(searchFormId).action = "/search/search.naver"
+	document.getElementById(searchFormId).target = "_self";
+}
+
+window.onbeforeunload  = function  () {
+	document.charset = "utf-8";
+}
+
+function changeDefaultCharset() {
+	document.charset = "utf-8";
+}
+
+
+function toggleDetailSearch(e) {
+	jindo.$Element("detailSearchLayer").toggle();
+
+	if (jindo.$Element("detailSearchLayer").visible()) {
+
+		jindo.$Element("btn_detail_search").addClass("on");
+		
+		jindo.$Fn(function(event) {
+			var key = event.key();
+			var TAB_KEY_CODE = 9;
+			if (key.shift == false && key.keyCode == TAB_KEY_CODE) {
+				nextFocusSelect('btn_detail_search');
+				event.stopDefault();
+			}
+		}).attach(jindo.$("closelayerBtn"), "keydown");
+		
+		jindo.$Fn(function() {
+			nextFocusSelect('btn_detail_search');
+		}).attach(jindo.$("closeDetailSearch", "closelayerBtn"), "click");
+		
+		if (!initDetailSearchCate) {
+			loadSubCategory(1, "");
+			initDetailSearchCate = true;
+		}
+		
+		detailSearchEvents["closelayer"] = makeEventHandler( toggleDetailSearch, jindo.$$.getSingle("a.closelayer", jindo.$("detailSearchLayer")), "click");
+		detailSearchEvents["closelayer"] = makeEventHandler( toggleDetailSearch, jindo.$$.getSingle("a.closelayer", jindo.$("detailSearchLayer")), "blur");
+		detailSearchEvents["closeDetailSearch"] = makeEventHandler( toggleDetailSearch, jindo.$("closeDetailSearch"), "click");
+		detailSearchEvents["initDetailSearch"] = makeEventHandler( initDetailSearch, jindo.$("initDetailSearch"), "click");
+		detailSearchEvents["detailSearchForm"] = makeEventHandler( detailSearch, jindo.$("detailSearchForm"), "submit");
+
+		jindo.$A(jindo.$$("select[name*=cate]", jindo.$("detailSearchLayer"))).forEach( function(ele) {
+			detailSearchEvents[ele.name] = makeEventHandler( selectCategory, ele, "change");
+		});
+
+	} else {
+		jindo.$Element("btn_detail_search").removeClass("on");
+
+		detailSearchEvents["closelayer"].detachEvent();
+		detailSearchEvents["closeDetailSearch"].detachEvent();
+		detailSearchEvents["initDetailSearch"].detachEvent();
+		detailSearchEvents["detailSearchForm"].detachEvent();
+		jindo.$A(jindo.$$("select[name*=cate]", jindo.$("detailSearchLayer"))).forEach( function(ele) {
+			detailSearchEvents[ele.name].detachEvent();
+		});
+
+		initDetailSearch(e);
+	}
+	
+	e.stopDefault();
+}
+
+
+function selectCategory(e) {
+	var m = /cate([1-4]{1})Depth/.exec(e.element.name);
+	var selectedCategory = e.element.value;
+	var depth;
+
+	if (!!m && m.length >= 2) {
+		depth = parseInt(m[1], 10); //m[1] 은 현재 선택한 카테고리 depth
+	}
+
+	if (++depth <= 4 && selectedCategory != "" ) {
+		loadSubCategory(depth, selectedCategory);
+	}
+}
+
+
+function loadSubCategory(depth, category) {
+
+	for (var i = depth; i <= 4; i++) {
+		var selectObj = jindo.$$.getSingle("select[name=cate" + i + "Depth]", jindo.$("detailSearchLayer"));
+		jindo.$Element(selectObj).hide();
+	}
+
+	jindo.$Ajax("/category/child_category.naver", {
+		onload : function(res) {
+			initSubCategory(depth);
+			var cateNDepth = jindo.$$.getSingle("select[name=cate" + depth + "Depth]", jindo.$("detailSearchLayer"));
+			var cate = jindo.$A(res.json());
+			if (!!cate && cate.length() > 0) {
+				jindo.$Element(cateNDepth).show();
+				cate.forEach( function(cate, i) {
+					var optionObj = document.createElement("option");
+					optionObj.text = cate.name;
+					optionObj.value = cate.code;
+					cateNDepth.options.add(optionObj);
+				});
+			}
+		}
+	}).request( { cate_code:category} ); //category code 값을 주지 않으면 1 depth 전체.
+}
+
+
+function initSubCategory(depth) {
+	for ( var i = depth; i <= 4; i++ ) {
+		var select = jindo.$$.getSingle("select[name=cate" + i + "Depth]", jindo.$("detailSearchLayer"));
+		select.options.length = 0;
+		var optionObj = document.createElement("option");
+		optionObj.text = "- - - - - - - - - - - - - - - - -";
+		optionObj.value = "";
+		select.options.add(optionObj);
+	}
+}
+
+
+function initDetailSearch(e) {
+	jindo.$A(jindo.$$("input[type=text]", jindo.$("detailSearchLayer"))).forEach( function(ele) { ele.value = ""; });
+	jindo.$A(jindo.$$("select", jindo.$("detailSearchLayer"))).forEach( function( ele ) { ele.value = ""; });
+
+	jindo.$A(jindo.$$("select[name*=cate]", jindo.$("detailSearchLayer"))).forEach( function(ele, index) {
+		if (index >= 1) {
+			jindo.$Element(ele).hide();
+		}
+	});
+	e.stopDefault();
+}
+
+
+function detailSearch(e) {
+	var publishStartYear, publishStartMonth, publishEndYear, publishEndMonth;
+	jindo.$A(jindo.$$("select[name*=publish]", jindo.$("detailSearchLayer"))).forEach( function( ele ) {
+		if (ele.value != "") {
+			eval(ele.name + "= ele.value");
+		}
+	});
+	var publishStartDay = jindo.$$.getSingle("input[name=publishStartDay]", jindo.$("detailSearchForm"));
+	var publishEndDay = jindo.$$.getSingle("input[name=publishEndDay]", jindo.$("detailSearchForm"));
+	publishStartDay.value = "";
+	publishEndDay.value = "";
+
+	if (!!publishStartYear) {
+		if (!!publishStartMonth) {
+			publishStartDay.value = publishStartYear + publishStartMonth;
+		} else {
+			publishStartDay.value = publishStartYear + "01";
+		}
+	} else if (!!publishStartMonth) {
+		alert("발간 연도를 선택해 주세요.");
+		e.stopDefault();
+		return false;
+	}
+
+	if (!!publishEndYear) {
+		if (!!publishEndMonth) {
+			publishEndDay.value = publishEndYear + publishEndMonth;
+		} else {
+			publishEndDay.value = publishEndYear + new jindo.$Date().format("m");
+		}
+	} else if (!!publishEndMonth) {
+		alert("발간 연도를 선택해 주세요.");
+		e.stopDefault();
+		return false;
+	}
+
+	if (publishStartDay.value == "" && publishEndDay.value != "") {
+		publishStartDay.value = "198001"
+	}
+	if (publishStartDay.value != "" && publishEndDay.value == "") {
+		publishEndDay.value = new jindo.$Date().format("Ym");
+	}
+
+	if (publishStartDay.value != "" && publishEndDay.value != "") {
+		if (parseInt(publishStartDay.value, 10) > parseInt(publishEndDay.value, 10)) {
+			alert("기간 범위가 잘못되었습니다. 다시 선택해 주세요.");
+			e.stopDefault();
+			return false;
+		}
+	}
+
+	var maxDepth = 0;
+	var selectedCategory;
+	jindo.$A(jindo.$$("select[name*=cate]", jindo.$("detailSearchLayer"))).forEach( function(ele) {
+		var m = /cate([1-4]{1})Depth/.exec(ele.name);
+		if (!!m && m.length >= 2 && parseInt(m[1], 10) > maxDepth && ele.value != "") {
+			maxDepth = parseInt(m[1], 10); //m[1] 은 현재 선택한 카테고리 depth
+			selectedCategory = ele.value;
+		}
+	});
+
+	var valid = false;
+	jindo.$A(jindo.$$("input[type=text]", jindo.$("detailSearchLayer"))).forEach(
+		function(ele) {
+			if (jindo.$S(ele.value).trim() != "") {
+				valid = true;
+			}
+		}
+	);
+
+	if (!!selectedCategory) {
+		jindo.$$.getSingle("input[name=categoryId]", jindo.$("detailSearchForm")).value = selectedCategory;
+	}
+
+	if (!valid ) {
+		alert("상세검색을 위해 적어도 한 곳에는 검색어를 입력해 주세요.");
+		e.stopDefault();
+		return false;
+	}
+
+	return true;
+}
+
+function makeEventHandler(fpCallback, oElement, sEventType) {
+	var ret = {};
+	ret = jindo.$Fn( fpCallback, this ).attach( oElement, sEventType );
+	ret.detachEvent = function() {
+ 		ret.detach( oElement, sEventType );
+	}
+	return ret;
+}
+
+function nextFocusSelect(idName) {
+	jindo.$(idName).focus();
+}
+
+
+function nextLeftCategoryFocus() {
+	if (jindo.$Element("btn_left_category").hasClass("on") == true) { 
+		if (false) {
+			jindo.$("yes24_bestseller").focus();
+		} else if (false) {
+			jindo.$("todaybook_recent").focus();
+		} else if (false) {
+			jindo.$("theme_rcmmd").focus();
+		} else if (false) {
+			showNaverMeExplain();
+			jindo.$$("#naverMeExplain a")[0].focus();
+		} else if (false) {
+			jindo.$("wish_list").focus();
+		} else if (false) {
+			jindo.$("book_search").focus();
+		} else if (false) {
+			jindo.$("home_navi").focus();
+		} else if (false) {
+			jindo.$("tab_library").focus();
+		} 
+	} else {
+		jindo.$$("#lc_100 > a[name=lc_100]")[0].focus();
+	}
+}
+
+</script></head>
+<body>
+
+<div id="wrap" >
+	<div id="u_skip">
+		<a href="#" id="startPoint" style="overflow:hidden;z-index:-1;width:1px;height:1px;padding:0;border:none;background:none;font-size:0;line-height:0">스킵 네비게이션 사용하기</a>
+		<a href="#lnb" onclick="document.getElementById('lnb').tabIndex=-1;document.getElementById('lnb').focus();return false;"><span>메인 메뉴로 바로가기</span></a>
+		<a href="javascript:nextLeftCategoryFocus();" ><span>하위 메뉴로 바로가기</span></a>
+		<a href="#content" onclick="document.getElementById('content').tabIndex=-1;document.getElementById('content').focus();return false;"><span>본문으로 바로가기</span></a>
+	</div>
+	<div id="header">
+		<span class="blind">글로벌 메뉴</span>
+		<div id="gnb">
+		 	<script type="text/javascript" charset="utf-8" src="https://ssl.pstatic.net/static.gn/templates/gnb_utf8.nhn?20220116"></script>
+		</div>		
+		<div id="snb_wrap" class="NE=a:STA">
+			 <h1><a href="http://www.naver.com" class="NPI=a:naverlogo"><img src="https://ssl.pstatic.net/static/header/h1/bi_naver.gif" width="85" height="25" alt="NAVER" title="NAVER"></a>
+				<a href="/" class="NPI=a:book"><img src="https://ssl.pstatic.net/static/book/image/h_book.gif" width="20" height="25" alt="책" title="책"></a><span>|</span>
+				<a target="_blank" href="http://series.naver.com/ebook/recommendList.series" class="h_ebook N=a:LNB.books"><img src="https://ssl.pstatic.net/static/book/image/h_ebook.gif" width="29" height="19" alt="e북" title="e북"></a><span>|</span>
+			    <a target="_blank" href="https://audioclip.naver.com/" class="h_audio"><img src="https://ssl.pstatic.net/static/book/img/2018/h_audio.png" width="63" height="19" alt="오디오북" title="오디오북"></a>
+			</h1>
+			<form id="snbSearchForm" name="search" method="get" action="/search/search.naver">
+			<fieldset>
+				<legend>검색</legend>
+				<div class="snb_search_box">
+					<div class="snb_search_box_sub">
+						<input type="hidden" name="sm" id="sm" value="sta_hty.book">
+						<input type="hidden" name="sug" id="sug" value="">
+						<input type="hidden" name="where" value="nexearch">
+						
+						<input type="text" title="검색" name="query" autocomplete="off" value="%28%EA%B8%88%EB%82%9C%EC%83%88%EC%9D%98%29%20%ED%81%B4%EB%9E%98%EC%8B%9D%20%EC%97%AC%ED%96%89" id="nx_query"  accesskey="s" class="snb_search_text" maxlength="120">
+				 		
+				 		<span class="btn_arrow" id="nautocomplete">
+					  		<a href="#" onclick="return false;" class="btn_arrow"><img class="triangleImg" src="https://ssl.pstatic.net/static/common/snb/090513/bu_arrow_down.gif" alt="자동완성 펼치기" title="자동완성 펼치기" width="21" height="19"></a>
+						</span>
+						<div style="position:absolute; left:2px; top:22px; z-index:1;" >
+							<iframe id="autoFrame" title="자동완성" src="about:blank" frameborder="0" width="450" height="0" marginwidth="0" marginheight="0" scrolling="no" style="display:none"></iframe>
+						</div>
+					</div>
+					<input id="search_btn" src="https://ssl.pstatic.net/static/book/image/btn_search.gif" alt="검색" title="검색" type="image" class="btn_search NPI=a:search" onclick="return searchList('snbSearchForm')">
+					<a href="javascript:goNaverSearch('snbSearchForm');" class="btn_search N=a:STA.nx"><img src="https://ssl.pstatic.net/static/book/image/btn_united_search.gif" width="56" height="25" alt="통합검색" title="통합검색"></a>
+					<a href="#" class="btn_detail_search N=a:STA.detailsearch" id="btn_detail_search"><img src="https://ssl.pstatic.net/static/book/image/btn_detail_search.gif" width="44" height="35" alt="상세검색" title="상세검색"></a>
+				</div>
+			</fieldset>
+			</form>
+		</div>
+
+		<div class="layerpopup" style="left:-3px; top:58px;" id="detailSearchLayer"></div>
+		<div class="lnb" id="lnb">
+			<span class="blind">주메뉴</span>
+			<ul>
+			<li id="btn_left_category" class="depth1 on"><a href="#" id="search_category" onclick="toggleLeftCategory();return false;" class="N=a:LNB.categorysearch"><span>분야별 찾기</span></a></li>
+			<li class="depth2"><a href="/index.naver" class="N=a:LNB.home" id="homeTab"><span>책 홈</span></a></li>
+			<li class="depth3"><a href="/bestsell/bestseller_list.naver" class="N=a:LNB.bestseller"><span>베스트셀러</span></a></li>
+            <li class="depth6"><a href="/bookshelf/index.naver" class="N=a:LNB.bookshelf"><span>지서재</span></a></li>
+			</ul>
+			<span class="blind">관련 서비스</span>
+            
+      </div>
+		<div id="layer_left_category" class="category_all" style="display:none;">
+			<h3 class="blind">전체 분야 메뉴</h3>
+			<script type="text/javascript">
+				var openCategoryLayerName = "";
+				var selectedCategoryLayerName = "";
+				var timeoutObj = new Array();
+				var isIpadBrowser = ("OTHERS".search("IPAD") > -1);
+				var beforeCategoryName = "";
+				var selectedCategoryObj = null;
+				
+				
+				function divideCategoryLayer(e) {
+					selectedCategoryObj = e;
+					var objName = (e.type == "mouseover") ? e.currentElement.id : e.currentElement.name;
+					
+					if (isIpadBrowser) {
+						objName = e.currentElement.name;
+						
+						
+						if(isSameCategoryName(objName)) {
+							location.href = e.currentElement.href;
+						}
+						
+						beforeCategoryName = objName;
+						e.stop();
+					}
+					showCategoryLayer(objName);
+				}
+				
+				
+				function isSameCategoryName(currentCategoryName) {
+					return (beforeCategoryName == currentCategoryName); 
+				}
+				
+				
+				function showCategoryLayer(layerName) {
+					if (layerName == null) {
+						return;
+					}
+	
+					if (smartSearch) {
+						smartSearch.hide();
+					}
+					
+					var lastOpenCategoryLayerName = openCategoryLayerName;
+					openCategoryLayerName = layerName;
+					
+					clearTimeout(timeoutObj[layerName]);
+					hideCategoryLayerByName(lastOpenCategoryLayerName);
+					
+				 	if (selectedCategoryLayerName != "" && layerName == selectedCategoryLayerName) {
+						removeClass(document.getElementById(selectedCategoryLayerName), "selected");
+					}
+					
+				 	addClass(document.getElementById(layerName), "over");
+					
+					if (document.getElementById(layerName).offsetTop < 70) {
+						document.getElementById("sub_" + layerName).style.top = document.getElementById(layerName).offsetTop * (-1) + 'px';
+					} else if (document.getElementById(layerName).offsetTop + document.getElementById("sub_" + layerName).offsetHeight > 540) {
+						document.getElementById("sub_" + layerName).style.top = 540 - document.getElementById(layerName).offsetTop - document.getElementById("sub_" + layerName).offsetHeight + 'px';
+					}
+				}
+				
+				
+				function hideCategoryLayer(e) {
+					beforeCategoryName = "";
+					selectedCategoryObj = null;
+					
+					var objName = "";
+					var isIpadCloseBtn = false;
+					
+					if (e.className != undefined) { 
+						objName = "lc_340";
+					} else if (e.type == "keydown") {
+						objName = "lc_100";
+					} else { 
+						objName = (isIpadBrowser)? e.currentElement.name : e.currentElement.id;
+						isIpadCloseBtn = (e.currentElement.className.search("btn_close") > -1)
+					}
+					
+					if (isIpadCloseBtn) {
+						e.stop();
+						objName = e.currentElement.name.substr(4);
+					}
+					clearTimeout(timeoutObj[objName]);
+					timeoutObj[objName] = setTimeout('hideCategoryLayerByName("' + objName + '", true)',50);
+				}
+				
+				
+				function hideCategoryLayerByName(objName, removeHistory) {
+					if (removeHistory == true) {
+						openCategoryLayerName = "";
+					}
+					if (objName != "" && openCategoryLayerName != objName) {
+						var layerObj = document.getElementById(objName);
+						if(hasClass(layerObj, "over")) {
+							if (selectedCategoryLayerName != "" && objName == selectedCategoryLayerName) {
+								addClass(document.getElementById(selectedCategoryLayerName), "selected");
+							}
+							removeClass(layerObj, "over");
+							removeClass(document.getElementById("sub_" + objName), "over");
+							clearTimeout(timeoutObj[objName]);
+						}
+					}
+				}
+				
+				
+				function makeCategoryLink() {
+					
+					var parentCategory = jindo.$$("#left_category a[cate$=0]");
+					for (var i = 0, end = parentCategory.length; i < end; i++) {
+						var cateCode = jindo.$Element(parentCategory[i]).attr("cate");
+						jindo.$Element(parentCategory[i]).attr("href", "/category/index.naver?cate_code=" + cateCode);
+					}
+					
+					
+					var childCategory = jindo.$$("#left_category div[id^=sub_lc_] a");
+					for (var i = 0, end = childCategory.length; i < end; i++) {
+						var cateCode = jindo.$Element(childCategory[i]).attr("cate");
+						jindo.$Element(childCategory[i]).addClass("N=a:cat." + cateCode);
+					}
+				}
+				
+				
+				function makeCategoryEventHandler() {					
+					if (isIpadBrowser == true) {
+						jindo.$Fn(divideCategoryLayer, this).attach(jindo.$$("#left_category a[class^=item]"), "click");
+						jindo.$Fn(hideCategoryLayer, this).attach(jindo.$$("#left_category a.btn_close"), "click"); /** [x]버튼 */
+					} else {
+						var targetObj = jindo.$$("#left_category li[id^=lc_]");
+						var focusObj = jindo.$$("#left_category li[id^=lc_] > a");
+
+						jindo.$Fn(divideCategoryLayer, this).attach(targetObj, "mouseover");
+						jindo.$Fn(divideCategoryLayer, this).attach(focusObj, "focus");
+						jindo.$Fn(hideCategoryLayer, this).attach(targetObj, "mouseout");
+					}
+				}
+			</script>
+			<script type="text/javascript">
+						var isLeftLoaded = false;
+						function toggleLeftCategory() {
+							if (selectedCategoryObj != null) {
+								hideCategoryLayer(selectedCategoryObj);								
+							}
+							var btnLeftCategory = document.getElementById("btn_left_category");
+							var layerLeftCategory = document.getElementById("layer_left_category");
+			
+							
+							if (!isLeftLoaded) {
+								var ajax = jindo.$Ajax("/category/left_category_list_ajax.naver", {
+									type : 'xhr',
+									onload : function(res) {
+										jindo.$Element("layer_left_category").hide();
+										jindo.$Element("layer_left_category").html(res.text());
+										jindo.$Element("layer_left_category").show();
+										makeCategoryLink();
+										makeCategoryEventHandler();
+										isLeftLoaded = true;
+									}
+								});
+								ajax.request();
+							}
+			
+							if (hasClass(btnLeftCategory, "on")) {
+								removeClass(btnLeftCategory, "on");
+								addClass(btnLeftCategory, "off");
+								layerLeftCategory.style.display = '';
+							} else {
+								removeClass(btnLeftCategory, "off");
+								addClass(btnLeftCategory, "on");
+								layerLeftCategory.style.display = 'none';
+							}
+						}
+					</script>
+				</div>
+		<script type="text/javascript">
+		function showMobilePopup() {
+			var phones = ["iphone", "galaxyS"];
+			var i = Math.floor(Math.random() * 10 + 1) % phones.length;
+			window.open("http://mobile.naver.com/mobileweb/popup_" + phones[i] + ".nhn?app=book", "myWindow", "status = 1, height = 645, width = 375, resizable = 0, scrollbars=no");
+		}
+
+		function blockChk(ascode) { 
+			var aa;
+			if (ascode == "nbooks") { 
+				aa = "http://webmsg.naver.com/popup_send/send_url.php?code=" + ascode + "&msg=http://me2.do/books&SMSID=ESW00017&MMSID=EMG00005";
+			} else { 
+				location.href='#nofocus'; 
+				aa = "http://webmsg.naver.com/popup_send/send_url.php?code=" + ascode + "&SMSID=ESW00017&MMSID=EMG00005";	
+			}
+			 
+			window.open(aa,"pop_alert","toolbar=no,scrollbars=no ,width=285,height=402,top=100,left=100"); 
+			
+			return false; 
+		}
+		</script>
+	</div>
+
+	<script type="text/javascript" src="/js/jquery-1.9.1.min.js?20211207091736"></script>
+    <script type="text/javascript" src="/js/logeye.js"></script>
+    <script type="text/javascript">
+        //g_ssc, g_query는 nclicks 에서 사용.
+        var g_ssc = "svc.book.bsearch";
+        var g_query;
+        
+        g_query = "%2528%25EA%25B8%2588%25EB%2582%259C%25EC%2583%2588%25EC%259D%2598%2529%2520%25ED%2581%25B4%25EB%259E%2598%25EC%258B%259D%2520%25EC%2597%25AC%25ED%2596%2589";
+        
+        var ccsrv = "cc.naver.com";
+        var nclk_evt = 3;
+        nclk_do();
+    </script>
+    <div id="container" class="type4">
+        <div id="start" class="blind"><a name="start" href="#">본문시작</a></div>
+        <div id="search_result">
+            <p>
+                        <strong>'%28%EA%B8%88%EB%82%9C%EC%83%88%EC%9D%98%29%20%ED%81%B4%EB%9E%98%EC%8B%9D%20%EC%97%AC%ED%96%89'</strong>에 대한 검색결과&nbsp;</p>
+                <div class="scl">
+                <ul>
+                    <li class="search_menu1"><strong><a href="/search/search.naver?query=%2528%25EA%25B8%2588%25EB%2582%259C%25EC%2583%2588%25EC%259D%2598%2529%2520%25ED%2581%25B4%25EB%259E%2598%25EC%258B%259D%2520%25EC%2597%25AC%25ED%2596%2589&qdt=1" class="N=a:csl.book,r:,i:" id="book_search"><span>책검색</span></a></strong></li>
+                    <li class="search_menu2"><a href="/search/text_search.naver?query=%2528%25EA%25B8%2588%25EB%2582%259C%25EC%2583%2588%25EC%259D%2598%2529%2520%25ED%2581%25B4%25EB%259E%2598%25EC%258B%259D%2520%25EC%2597%25AC%25ED%2596%2589&qdt=1"  class="N=a:csl.text,r:,i:"><span>본문검색</span></a></li>
+                </ul>
+                <h2 class="blind">책 검색</h2></div>
+        </div>
+
+        <script type="text/javascript" charset="utf-8">
+            var currentFilterType = 0;
+            var currentFilterValue = 0;
+
+            function depth1Close(layerId) {
+                var topCurrentOpenObj = document.getElementById("li_3_"+layerId.substring(0,3));
+                if(topCurrentOpenObj != null && topCurrentOpenObj != "undefined" ) {
+                    if(topCurrentOpenObj.className == "selected") {
+                        topCurrentOpenObj.className = "open selected";
+                    } else if(topCurrentOpenObj.className == "close selected"){
+                        topCurrentOpenObj.className = "";
+                    }
+                }
+            }
+
+            function depth1Selected(layerId) {
+                var topLayerObj = document.getElementById("li_3_"+layerId.substring(0,3));
+                var topClassName = topLayerObj.className;
+                if(topClassName == "" || topClassName == "close selected") {
+                    topLayerObj.className ='close selected';
+                } else {
+                    topLayerObj.className ='selected';
+                }
+            }
+
+            function depth2Selected(layerId) {
+                var topLayerObj = document.getElementById("li_3_"+layerId.substring(0,3));
+                var subLayerObj = document.getElementById("sub_3_"+layerId.substring(0,3));
+                topLayerObj.className ='open selected';
+                subLayerObj.style.display = "";
+            }
+
+            /**
+             요약 검색 선택
+             */
+            function selectedFilterValue(filterType, filterValue) {
+                var currentOpenObj = document.getElementById(currentFilterType+"_"+currentFilterValue);
+                var defaultAllSelectObj = document.getElementById("span_all");
+
+                if(defaultAllSelectObj != null && defaultAllSelectObj != "undefined") {
+                    jindo.$Element(jindo.$("all")).remove("span_all");
+                }
+
+                if(currentOpenObj != null && currentOpenObj != "undefined") {
+                    currentOpenObj.className = "";
+                    jindo.$Element(currentOpenObj).remove("span_" + currentOpenObj.id);
+                    if(currentFilterType == '3') {
+                        depth1Close(currentFilterValue);
+                    }
+                }
+
+                if(filterType != "" ) {
+                    var selectedObj = document.getElementById(filterType+"_"+filterValue);
+                    if(selectedObj != null ) {
+                        selectedObj.className = 'selected';
+                        jindo.$Element(selectedObj).append(jindo.$("<span class='blind' id='span_" + selectedObj.id + "'>선택됨</span>"));
+                        if(filterType == '3' ) { // category selecte
+                            var topLayerObj = document.getElementById("li_3_"+filterValue.substring(0,3));
+                            if(topLayerObj.style.display == "none") {
+                                displayTopCategory(1); //more
+                            }
+                            if(filterValue.length > 3) { //2 Depth(sub) Category
+                                depth2Selected(filterValue);
+                            } else {//topCateogry
+                                depth1Selected(filterValue);
+                            }
+                        }
+                    }
+                    currentFilterType = filterType;
+                    currentFilterValue = filterValue;
+                }
+            }
+
+
+            /**
+             * 하위 분야 열기/닫기
+             */
+            function displaySubCategory(openLayerId) {
+                var selectedObj = document.getElementById("3_"+openLayerId);
+                var topLayerObj = document.getElementById("li_3_"+openLayerId.substring(0,3));
+                var imgObj = jindo.$$("#li_3_" + openLayerId.substring(0,3) + " > span > a > img")[0];
+                var subLayerObj = document.getElementById("sub_3_"+openLayerId.substring(0,3));
+
+                if(subLayerObj.style.display == "") { //open -> close
+                    if(isSelectedLayer(openLayerId.substring(0,3))) {
+                        topLayerObj.className = "close selected";
+                    } else {
+                        topLayerObj.className = "";
+                    }
+                    subLayerObj.style.display="none";
+                    jindo.$Element(imgObj).attr("alt", "펼치기");
+                } else { //close -> open
+                    if(isSelectedLayer(openLayerId.substring(0,3))) {
+                        topLayerObj.className = "selected";
+                    } else {
+                        topLayerObj.className = "open selected";
+                    }
+                    subLayerObj.style.display="";
+                    jindo.$Element(imgObj).attr("alt", "접기");
+                }
+            }
+
+            /**
+             선택되어져 있었던 분야 인가
+             */
+            function isSelectedLayer(openLayerId) {
+                var topLayerClassName = document.getElementById("li_3_"+openLayerId).className;
+                if (topLayerClassName == "close selected" || topLayerClassName == "selected" ) {
+                    return true;
+                }
+                return false;
+            }
+
+            /**
+             분야 5개 이상 접기/펴기
+             */
+            function displayTopCategory(show) {
+                var categoryMoreDiv = document.getElementById("category_more");
+                categoryMoreDiv.className = "more_list";
+                if(show) {
+                    
+                    categoryMoreDiv.innerHTML = "<a href='javascript:displayTopCategory(0)'>접기</a>";
+                } else {
+                    
+                    categoryMoreDiv.innerHTML = "<a href='javascript:displayTopCategory(1)' class=\"N=a:lft.mdepth,r:,i:\">더보기</a>";
+                }
+            }
+        </script>
+
+        <div id="content">
+            <div id="content">
+ 			<div class="tit_area">
+				<h2 class="tit order4"><span>책검색</span></h2>
+			</div>
+			<div class="option_search">
+				<ul class="sort_type">
+				<li class="sort4"><strong><a href="#" onclick="loadFilterList('&orderType=rel.desc&viewType=list&searchType=bookSearch&serviceSm=service.basic&title=&author=&publisher=&isbn=&toc=&subject=&publishStartDay=&publishEndDay=&categoryId=&qdt=1', '0','');"><span>관련도순</span></a></strong></li>
+				<li class="sort2"><a href="#" onclick="loadFilterList('&orderType=date.desc&viewType=list&searchType=bookSearch&serviceSm=service.basic&title=&author=&publisher=&isbn=&toc=&subject=&publishStartDay=&publishEndDay=&categoryId=&qdt=1','0','');"><span>출간일순</span></a></li>
+				<li class="sort3"><a href="#" onclick="loadFilterList('&orderType=score.desc&viewType=list&searchType=bookSearch&serviceSm=service.basic&title=&author=&publisher=&isbn=&toc=&subject=&publishStartDay=&publishEndDay=&categoryId=&qdt=1','0','');"><span>판매량순</span></a></li>
+				</ul>
+
+				<div class="sort_type2">
+					<fieldset>
+						<legend>
+						<input type="checkbox" id="ebook" name="ebook" value="1" onclick="loadFilterList('&orderType=rel.desc&viewType=list&searchType=bookSearch&serviceSm=service.basic&title=&author=&publisher=&isbn=&toc=&subject=&publishStartDay=&publishEndDay=&categoryId=&qdt=1', '0','');"  class="N=a:viw.ebook,r:,i:">&nbsp;<label for="ebook" onclick="$('ebook').click()"><img src="https://ssl.pstatic.net/static/book/image/txt_ebook_check3.png" width="16" height="13" alt="eBook구매" class="ebook_check"></label>
+						<input type="checkbox" id="audiobook" name="audiobook" value="1" onclick="loadFilterList('&orderType=rel.desc&viewType=list&searchType=bookSearch&serviceSm=service.basic&title=&author=&publisher=&isbn=&toc=&subject=&publishStartDay=&publishEndDay=&categoryId=&qdt=1', '0','');"  class="N=a:viw.ebook,r:,i:">&nbsp;<label for="audiobook" onclick="$('audiobook').click()"><img src="https://ssl.pstatic.net/static/book/img/2018/txt_audiobook.png" alt="오디오북" title="오디오북" width="38" height="13" class="abook_check"></label>
+						<input type="checkbox" id="buyAllow" name="buyAllow" value="1" onclick="loadFilterList('&orderType=rel.desc&viewType=list&searchType=bookSearch&serviceSm=service.basic&title=&author=&publisher=&isbn=&toc=&subject=&publishStartDay=&publishEndDay=&categoryId=&qdt=1', '0','');" >&nbsp;<label for="buy" onclick="document.getElementById('buyAllow').click()"><img src="https://ssl.pstatic.net/static/book/image/txt_search.gif" alt="구입가능도서" title="구입가능도서" width="56" height="12"></label></legend>
+					</fieldset>
+					<span><a href="#" onclick="loadFilterList('&orderType=rel.desc&viewType=list&searchType=bookSearch&serviceSm=service.basic&title=&author=&publisher=&isbn=&toc=&subject=&publishStartDay=&publishEndDay=&categoryId=&qdt=1', '0','');" class="on"><img src="https://ssl.pstatic.net/static/book/image/btn_list_view.gif" alt="리스트형보기" title="리스트형보기" width="21" height="38"></a><a href="#" onclick="loadFilterList('&orderType=rel.desc&viewType=image&searchType=bookSearch&serviceSm=service.basic&title=&author=&publisher=&isbn=&toc=&subject=&publishStartDay=&publishEndDay=&categoryId=&qdt=1','0','');" class="off"><img src="https://ssl.pstatic.net/static/book/image/btn_cover_view.gif" alt="이미지형보기" title="이미지형보기" width="21" height="38"></a></span>
+				</div>
+			</div>
+			<div class="no_result">
+		<p><em>'%28%EA%B8%88%EB%82%9C%EC%83%88%EC%9D%98%29%20%ED%81%B4%EB%9E%98%EC%8B%9D%20%EC%97%AC%ED%96%89'</em>에 대한 검색결과가 없습니다.</p>
+				<ul>
+				<li>단어의 철자가 정확한지 확인해 주세요.</li>
+				<li>검색어의 단어 수를 줄이거나, 다른 검색어로 검색해 보세요.</li>
+				<li>보다 일반적인 검색어로 다시 검색해 보세요.</li>
+				</ul>
+			</div>
+
+			<div class="search_recom">
+				<p>만족스러운 검색결과를 찾지 못하셨다면 아래 기능도 이용해 보세요.</p>
+				<ul>
+				<li><a href="http://search.naver.com/search.naver?where=nexearch&query=%2528%25EA%25B8%2588%25EB%2582%259C%25EC%2583%2588%25EC%259D%2598%2529%2520%25ED%2581%25B4%25EB%259E%2598%25EC%258B%259D%2520%25EC%2597%25AC%25ED%2596%2589&sm=svc_nrs" target="_blank">통합검색 결과보기</a></li>
+				<li><a href="#" id="link_detail_search">책 상세검색</a></li>
+				<li><a href="https://help.naver.com/support/contents/contents.nhn?serviceNo=702&categoryNo=2578" target="_blank">누락된 책 등록 신청</a></li>
+				</ul>
+			</div>
+	  	</div></div>
+
+            <div id="bookshelf_layer" class="layerpopup"> 
+	<div class="content"> 
+		<div class="lyr_people"> 
+			<strong class="blind">이 책을 추천한 지식인 레이어</strong> 
+			<dl> 
+				<dt>이 책을 추천한 지식인</dt> 
+                <dd><ul id="bookshelf_list" class="people_list"></ul></dd>
+			</dl> 
+			<a href="#" onclick="return hideBookshelfLayer();" onblur="return hideBookshelfLayer();" class="btn_close N=a:inb*k.name" title="닫기">이 책을 추천한 지식인 레이어 닫기</a> 
+		</div> 
+	</div> 
+</div> 
+
+<script type="text/javascript">
+
+function showBookshelfLayerByBid(bid) {
+	if (bid == null) {
+		return false;
+	}
+	request = NAjax.load("/bookshelf/bookshelf_list_json.naver?bid=" + bid, {"callback":generateBookshelfLayer, "returnType":NAjax.JSON}, bid);
+}
+
+function generateBookshelfLayer(obj, bid) {
+	var bookshelfList = jindo.$("bookshelf_list");
+	var bookshelfListInfo = obj.bookshelfList;
+	var liHtml = "";
+	for (var idx = 0; idx < bookshelfListInfo.length; idx++) {
+		var item = bookshelfListInfo[idx];
+		liHtml += "<li><a href=\""+ item.lifeLink +"\" target=\"_blank\" class='N=a:inb*k.name'>" + item.kinName + "</a><span><a href=\""+ item.lifeLink +"\" target=\"_blank\" class=\"btn_goto N=a:inb*k.shcu\">바로가기</a></span></li>";
+	}
+	bookshelfList.innerHTML = liHtml;
+	locateBookshelfLayer(bid);
+	showBookshelfLayer();
+}
+function locateBookshelfLayer(bid) {
+	var contentParent = jindo.$Element($('content').parentNode).offset();
+	var offset = jindo.$Element("bookshelf_btn_img_" + bid).offset();
+	var left = offset.left - contentParent.left- 3;
+	var index = $("bookshelf_btn_" + bid).parentNode.parentNode.parentNode.className.split("list_")[1];
+	var top = offset.top - contentParent.top + 22;
+
+	var layer = $("bookshelf_layer");
+	layer.style.top = top + "px";
+	layer.style.left = left + "px";
+}
+
+function showBookshelfLayer() {
+	var layer = $("bookshelf_layer");
+	layer.className = "layerpopup on";
+}
+
+function hideBookshelfLayer() {
+	var layer = $("bookshelf_layer");
+	layer.className = "layerpopup";
+	return false;
+}
+</script><div id="buy_layer" class="layerpopup">
+	<div class="content" style="width:305px;">
+		<div class="lyr_milage" style="left:3px;top:0px">
+			<strong class="blind">구매 레이어</strong>
+			<dl>
+			<dt id="buy_layer_title">도서 구매</dt>
+			<dd><ul id="buy_list" class="buy_list"></ul></dd>
+			</dl>
+			<div class="buy_tip" id="buy_tip"></div>
+			<a href="#" onclick="return hideBuyLayer();" onblur="return hideBuyLayer();" class="btn_close" title="닫기" alt="닫기">구매 레이어 닫기</a>
+		</div>
+	</div>
+</div>
+</div>
+    <div class="bttm_search">
+        <form id="searchFooter" name="searchFooter" method="get" action="/search/search.naver">
+            <fieldset>
+                <legend>책 검색</legend>
+                <div class="snb_search_box">
+                    <input type="hidden" name="sm" id="sm" value="sta_hty.book">
+                    <input type="hidden" name="where" value="nexearch">
+                    <input type="text" title="검색" id="nx_query2" name="query" value="%28%EA%B8%88%EB%82%9C%EC%83%88%EC%9D%98%29%20%ED%81%B4%EB%9E%98%EC%8B%9D%20%EC%97%AC%ED%96%89" class="snb_search_text" maxlength="120">
+                    <input src="https://ssl.pstatic.net/static/book/image/btn_search.gif" alt="검색" title="검색" type="image" class="btn_search NPI=a:search"  onclick="return searchList('searchFooter')">
+                    <a href="javascript:goNaverSearch('searchFooter')" class="btn_search N=a:STA.nx"><img src="https://ssl.pstatic.net/static/book/image/btn_united_search.gif" width="56" height="25" alt="통합검색" title="통합검색"></a>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
+    <script type="text/javascript">
+        var lastBuyLayerBid = -1;
+        var buyLayer = document.getElementById("buy_layer");
+        var buyList = document.getElementById("buy_list");
+        var buyTip = document.getElementById("buy_tip");
+        var loadFilter = false;
+        var paginateLayer = jindo.$$("#content > div.paginate")[0];
+        var isIpadBrowser = ("OTHERS".search("IPAD") > -1);
+
+        jindo.$Fn(function() {
+            if (loadFilter == false && true) {
+                if(paginateLayer != null && paginateLayer != 'undefined') {
+                    jindo.$Element(paginateLayer).before(buyLayer);
+                }
+            }
+        }).attach(window, "load");
+
+        function showBuyLayerByBid(bid) {
+            if (bid == null || isNaN(bid)) {
+                return false;
+            }
+            request = NAjax.load("/product/productInfo.naver?bid=" + bid, {"callback":generateBuyLayer, "returnType":NAjax.JSON}, bid);
+        }
+
+        function showEbookBuyLayerByBid(bid) {
+            if (bid == null || isNaN(bid)) {
+                return false;
+            }
+            request = NAjax.load("/product/ebookProductInfo.naver?bid=" + bid, {"callback":generateEbookBuyLayer, "returnType":NAjax.JSON}, bid);
+        }
+
+        function showAbookBuyLayerByBid(bid, type) {
+            if (bid == null || isNaN(bid)) {
+                return false;
+            }
+            request = NAjax.load("/product/abookProductInfo.naver?bid=" + bid,	{"callback":generateAbookBuyLayer, "returnType":NAjax.JSON}, bid, type);
+        }
+
+        function generateBuyLayer(obj, bid) {
+            if(!!obj && !!obj.productList && obj.productList.length > 0) {
+                var lowestPrice = obj.lowestPrice;
+                var cpNpayInfo = obj.cpNpay;
+                obj = obj.productList;
+                buyList.innerHTML = '';
+
+                for (var idx = 0; idx < obj.length; idx++) {
+                    var item = obj[idx];
+                    var cpname_booktype = item.cpName + "_PAPER";
+                    if(item.bookType == 'PAPER') {
+                        var buyItem = document.createElement("li");
+                        buyList.appendChild(buyItem);
+
+                        var nPayButton = '';
+                        var nPayWrapDivStartTag = '';
+                        var nPayWrapDivEndTag = '' ;
+
+                        if(cpNpayInfo[cpname_booktype].rate > 0) {
+                            buyItem.className = "npay";
+                            nPayWrapDivStartTag = '<div class="npay_wrap">';
+                            nPayWrapDivEndTag = '</div>'
+                            nPayButton = '<a href="https://pay.naver.com/about" target="_blank" class="ico_npay" id="npay_' + item.cpName  +'_books"><img src="https://ssl.pstatic.net/static/book/img/2015/ico_npay_v2.png" width="31" height="13" alt="NPAY"></a>'
+                                    + '<div class="lpop_wrap3" id="npay_' + item.cpName + '_books_layer" style="display:none;">'
+                                    + '<div class="lpop_arr"></div>'
+                                    + '<div class="lpop_body">네이버 아이디 하나로 간편구매<br><a href="https://pay.naver.com/about" target="_blank"><em>Naver Pay</em> 서비스 보기 &gt;</a><br></div></div>'
+                                    + '<strong>' + cpNpayInfo[cpname_booktype].rate + '%<span class="blind">적립</span></strong>'
+                        }
+
+                        if (item.cpName == 'deprecated') {
+                            buyItem.innerHTML = "<a href=\"javascript:cpLink('"+item.cpName+"', '"+item.cpBiblioURL+"', '"+item.bid+"', '"+item.goodsID+"');\" title='새창' onclick='callEyelogApi("+item.storeId+");' class='N=a:bls*b.cplist,r:"+item.cpName+",i:"+item.bid+"'><strong>"+ item.cpKoreanName + "</strong></a> <span><em><strong>" + currencyFormat(item.price) + "원</strong></em> <a href=\"javascript:cpLink('"+item.cpName+"', '"+item.cpSaleUrl + "', '"+item.bid+"', '"+item.goodsID+"', true);\" title='새창' onclick='callEyelogApi("+item.storeId+");' class='N=a:bls*b.buy,r:"+item.cpName+",i:"+item.bid+"'><img src=\"" + "https://ssl.pstatic.net/static/book/image" + "/btn_buy3.gif\" alt='구매' title='구매 새창' width='29' height='18' class='btn'></a></span>";
+                        } else {
+                            if (item.price == lowestPrice) {
+                                buyItem.className += " lowest";
+                            }
+                            if(item.cpName == 'conects') {
+                                buyItem.innerHTML = nPayWrapDivStartTag + "<a href=\"javascript:cpLink('"+item.cpName+"', '"+item.cpBiblioURL+"', '"+item.bid+"', '"+item.goodsID+"');\" title='새창' onclick='callEyelogApi("+item.storeId+");' class='N=a:bls*b.cplist,r:"+item.cpName+",i:"+item.bid+"'>" + item.cpKoreanName + "</a> " + nPayButton + nPayWrapDivEndTag + " <span><em>" + currencyFormat(item.price) + "원</strong></em> <a href=\"javascript:cpLink('"+item.cpName+"', '"+item.cpBiblioURL+"', '"+item.bid+"', '"+item.goodsID+"');\" title='새창' onclick='callEyelogApi("+item.storeId+");' class='N=a:bls*b.buy,r:"+item.cpName+",i:"+item.bid+"'><img src=\"" + "https://ssl.pstatic.net/static/book/image" + "/btn_buy3.gif\" alt='구매' title='구매 새창' width='29' height='18' class='btn'></a></span>";
+                            } else {
+                                buyItem.innerHTML = nPayWrapDivStartTag + "<a href=\"javascript:cpLink('"+item.cpName+"', '"+item.cpBiblioURL+"', '"+item.bid+"', '"+item.goodsID+"');\" title='새창' onclick='callEyelogApi("+item.storeId+");' class='N=a:bls*b.cplist,r:"+item.cpName+",i:"+item.bid+"'>" + item.cpKoreanName + "</a> " + nPayButton + nPayWrapDivEndTag + " <span><em>" + currencyFormat(item.price) + "원</strong></em> <a href=\"javascript:cpLink('"+item.cpName+"', '"+item.cpSaleUrl+"', '"+item.bid+"', '"+item.goodsID+"', true);\" title='새창' onclick='callEyelogApi("+item.storeId+");' class='N=a:bls*b.buy,r:"+item.cpName+",i:"+item.bid+"'><img src=\"" + "https://ssl.pstatic.net/static/book/image" + "/btn_buy3.gif\" alt='구매' title='구매 새창' width='29' height='18' class='btn'></a></span>";
+                            }
+                        }
+                    }
+                }
+
+                // npay 버튼 이벤트 추가
+                var aElem = jindo.$("npay_ypbooks_books", "npay_kangcom_books", "npay_yes24_books", "npay_aladdin_books", "npay_kyobo_books", "npay_bookpark_books", "npay_bandi_books", "npay_ridi_books");
+                var isIconNPayOver = false;
+                if(aElem) {
+                    jindo.$Fn(function(e) {
+                        isIconNPayOver = e.type == "mouseover";
+                        isIconNPayOut = e.type == "mouseout";
+                        var el = e.currentElement;
+                        if (/(books)$/i.test(el.id)) {
+                            var welLayer = jindo.$Element(el.id + "_layer");
+                        }
+                        window.setTimeout(function() {
+                            jindo.$$("div.lpop_wrap3").forEach(function(v, i){
+                                jindo.$Element(v).css("display", "none");
+                            });
+                            if(isIconNPayOver == true) {
+                                welLayer.css("display", "block");
+                            } else if(isIconNPayOut){
+                                welLayer.css("display", "none");
+                            }
+                        }, 50);
+                    }).attach(aElem, "mouseover").attach(aElem, "mouseout");
+                }
+
+                if (jindo.$Element("buy_list") != null) {
+                    jindo.$Element("buy_list").addClass("productBid_" + bid);
+                    jindo.$Element("buy_list").addClass("booktype_PAPER");
+                }
+
+                buyTip.innerHTML = "<a href=\"/bookdb/price.naver?bid=" + bid + "#book_price\" class='N=a:bls*b.ben,r:,i:'><img src=\"https://ssl.pstatic.net/static/book/image/btn_benefit.png\" width=\"99\" height=\"20\" title=\"구매혜택 상세보기\" alt=\"구매혜택 상세보기\" border=\"0\">";
+                locateBuyLayer(bid);
+                showBuyLayer(bid, "도서 구매");
+
+
+
+            } else {
+                buyList.innerHTML = '';
+                var buyItem = document.createElement("li");
+                buyList.appendChild(buyItem);
+                buyItem.innerHTML = '구매가 불가합니다.';
+                locateBuyLayer(bid);
+                showBuyLayer(bid, "도서 구매");
+            }
+
+            jindo.$$("div.lpop_detail a.btn_close").forEach(function(v, i) {
+                jindo.$Fn(closeSubDetailLayer).attach(jindo.$Element(v), "click");
+            });
+
+            if( jindo.$$("#buy_list > li a")[0] != null) {
+                jindo.$$("#buy_list > li a")[0].focus();
+            }
+        }
+
+        function generateAbookBuyLayer(obj, bid) {
+            var buyList = document.getElementById("buy_list");
+            var buyTip = document.getElementById("buy_tip");
+            var lowestPrice = obj.abookLowestPrice;
+            var cpNpayInfo = obj.cpNpay;
+            obj = obj.productList;
+            buyList.innerHTML = '';
+
+            for (var idx = 0; idx < obj.length; idx++) {
+                var item = obj[idx];
+                var cpname_booktype = item.cpName + "_EBOOK";
+                if(item.bookType == 'AUDIO') {
+                    var buyItem = document.createElement("li");
+                    buyList.appendChild(buyItem);
+
+                    var nPayButton = '';
+                    var nPayWrapDivStartTag = '';
+                    var nPayWrapDivEndTag = '' ;
+
+                    var pprice = item.price;
+                    if(!pprice || (item.lendPrice && (item.lendPrice < item.price))) {
+                        pprice = item.lendPrice;
+                    }
+
+                    if(cpNpayInfo[cpname_booktype].rate > 0) {
+                        buyItem.className = "npay";
+                        nPayWrapDivStartTag = '<div class="npay_wrap">';
+                        nPayWrapDivEndTag = '</div>'
+                        nPayButton = '<a href="http://pay.naver.com/about" target="_blank" class="ico_npay" id="npay_' + item.cpName  +'_books"><img src="https://ssl.pstatic.net/static/book/img/2015/ico_npay_v2.png" width="31" height="13" alt="NPAY"></a>'
+                                + '<div class="lpop_wrap3" id="npay_' + item.cpName + '_books_layer" style="display:none;">'
+                                + '<div class="lpop_arr"></div>'
+                                + '<div class="lpop_body">네이버 아이디 하나로 간편구매<br><a href="http://pay.naver.com/about" target="_blank"><em>Naver Pay</em> 서비스 보기 &gt;</a><br></div></div>'
+                                + '<strong>'+cpNpayInfo[cpname_booktype].rate+'%<span class="blind">적립</span></strong>'
+                    }
+
+                    if (item.cpName == 'deprecated') {
+                        buyItem.innerHTML = "<a href=\"javascript:cpLink('"+item.cpName+"', '"+item.cpBiblioURL+"', '"+item.bid+"', '"+item.goodsID+"');\" title='새창' onclick='callEyelogApi("+item.storeId+");' class='N=a:bls*b.cplist,r:"+item.cpName+",i:"+item.bid+"'><strong>"+ item.cpKoreanName + "</strong></a> <span><em><strong>" + currencyFormat(pprice) + "원</strong></em> <a href=\"javascript:cpLink('"+item.cpName+"', '"+item.cpSaleUrl + "', '"+item.bid+"', '"+item.goodsID+"', true);\" title='새창' onclick='callEyelogApi("+item.storeId+");' class='N=a:bls*b.buy,r:"+item.cpName+",i:"+item.bid+"'><img src=\"" + "https://ssl.pstatic.net/static/book/image" + "/btn_buy3.gif\" alt='구매' title='구매 새창' width='29' height='18' class='btn'></a></span>";
+                    }  else if(item.cpName == 'adc') {
+                        if (pprice == lowestPrice) {
+                            buyItem.className += " lowest";
+                        }
+
+                        var abookPrice, abookLendPrice;
+                        if(item.price && item.price == 0) {
+                            abookPrice = "무료";
+                        } else if(item.price && item.price > 0) {
+                            abookPrice = currencyFormat(String(item.price))+"원";
+                        }
+
+                        if(item.lendPrice && item.lendPrice == 0) {
+                            abookLendPrice = "무료";
+                        } else if(item.lendPrice && item.lendPrice > 0){
+                            abookLendPrice = currencyFormat(String(item.lendPrice))+"원";
+                        }
+
+                        if(abookPrice && abookLendPrice) {
+                            buyItem.innerHTML = nPayWrapDivStartTag + "<a href='"+item.cpBiblioURL+"' title='새창' onclick='callEyelogApi("+item.storeId+ ");' class='N=a:bls*b.cplist,r:" + item.cpName + ",i:" + item.bid + "'>" + item.cpKoreanName + "</a> " + nPayButton + nPayWrapDivEndTag
+                                    + " <span class='audiobook_price'><em>대여 " + abookLendPrice + "<br>구매 " + abookPrice + "</em> <a href='" + item.cpBiblioURL + "' title='새창' onclick='callEyelogApi(" + item.storeId + ");' class='N=a:bls*b.buy,r:" + item.cpName + ",i:" + item.bid + "'><img src=\"" + "https://ssl.pstatic.net/static/book/image" + "/btn_buy3.gif\" alt='구매' title='구매 새창' width='29' height='18' class='btn'></a></span>";
+                        } else if(abookPrice && !abookLendPrice) {
+                            buyItem.innerHTML = nPayWrapDivStartTag + "<a href='"+item.cpBiblioURL+"' title='새창' onclick='callEyelogApi("+item.storeId+ ");' class='N=a:bls*b.cplist,r:" + item.cpName + ",i:" + item.bid + "'>" + item.cpKoreanName + "</a> " + nPayButton + nPayWrapDivEndTag
+                                    + " <span class='audiobook_price'><em>구매 " + abookPrice + "</em> <a href='" + item.cpBiblioURL + "' title='새창' onclick='callEyelogApi(" + item.storeId + ");' class='N=a:bls*b.buy,r:" + item.cpName + ",i:" + item.bid + "'><img src=\"" + "https://ssl.pstatic.net/static/book/image" + "/btn_buy3.gif\" alt='구매' title='구매 새창' width='29' height='18' class='btn'></a></span>";
+                        } else if(!abookPrice && abookLendPrice) {
+                            buyItem.innerHTML = nPayWrapDivStartTag + "<a href='"+item.cpBiblioURL+"' title='새창' onclick='callEyelogApi("+item.storeId+ ");' class='N=a:bls*b.cplist,r:" + item.cpName + ",i:" + item.bid + "'>" + item.cpKoreanName + "</a> " + nPayButton + nPayWrapDivEndTag
+                                    + " <span class='audiobook_price'><em>대여 " + abookLendPrice + "</em> <a href='" + item.cpBiblioURL + "' title='새창' onclick='callEyelogApi(" + item.storeId + ");' class='N=a:bls*b.buy,r:" + item.cpName + ",i:" + item.bid + "'><img src=\"" + "https://ssl.pstatic.net/static/book/image" + "/btn_buy3.gif\" alt='구매' title='구매 새창' width='29' height='18' class='btn'></a></span>";
+                        }
+                    } else {
+                        if (pprice == lowestPrice) {
+                            buyItem.className += " lowest";
+                        }
+
+                        if(item.cpName == "conects") {
+                            buyItem.innerHTML = nPayWrapDivStartTag + "<a href=\"javascript:cpLink('" + item.cpName + "', '" + item.cpBiblioURL + "', '" + item.bid + "', '" + item.goodsID + "');\" title='새창' onclick='callEyelogApi("+item.storeId+");' class='N=a:bls*b.cplist,r:" + item.cpName + ",i:" + item.bid + "'>" + item.cpKoreanName + "</a> " + nPayButton + nPayWrapDivEndTag + " <span><em>" + currencyFormat(pprice) + "원</strong></em> <a href=\"javascript:cpLink('" + item.cpName + "', '" + item.cpBiblioURL + "', '" + item.bid + "', '" + item.goodsID + "');\" title='새창' onclick='callEyelogApi("+item.storeId+");' class='N=a:bls*b.buy,r:" + item.cpName + ",i:" + item.bid + "'><img src=\"" + "https://ssl.pstatic.net/static/book/image" + "/btn_buy3.gif\" alt='구매' title='구매 새창' width='29' height='18' class='btn'></a></span>";
+                        } else {
+                            buyItem.innerHTML = nPayWrapDivStartTag + "<a href=\"javascript:cpLink('" + item.cpName + "', '" + item.cpBiblioURL + "', '" + item.bid + "', '" + item.goodsID + "');\" title='새창' onclick='callEyelogApi("+item.storeId+");' class='N=a:bls*b.cplist,r:" + item.cpName + ",i:" + item.bid + "'>" + item.cpKoreanName + "</a> " + nPayButton + nPayWrapDivEndTag + " <span><em>" + currencyFormat(pprice) + "원</strong></em> <a href=\"javascript:cpLink('" + item.cpName + "', '" + item.cpSaleUrl + "', '" + item.bid + "', '" + item.goodsID + "', true);\" title='새창' onclick='callEyelogApi("+item.storeId+");' class='N=a:bls*b.buy,r:" + item.cpName + ",i:" + item.bid + "'><img src=\"" + "https://ssl.pstatic.net/static/book/image" + "/btn_buy3.gif\" alt='구매' title='구매 새창' width='29' height='18' class='btn'></a></span>";
+                        }
+                    }
+                }
+            }
+            // npay 버튼 이벤트 추가
+            var aElem = jindo.$("npay_ypbooks_books", "npay_kangcom_books", "npay_yes24_books", "npay_aladdin_books", "npay_kyobo_books", "npay_bookpark_books", "npay_bandi_books", "npay_ridi_books");
+            var isIconNPayOver = false;
+            if(aElem) {
+                jindo.$Fn(function(e) {
+                    isIconNPayOver = e.type == "mouseover";
+                    isIconNPayOut = e.type == "mouseout";
+
+                    var el = e.currentElement;
+                    if (/(books)$/i.test(el.id)) {
+                        var welLayer = jindo.$Element(el.id + "_layer");
+                    }
+                    window.setTimeout(function() {
+                        jindo.$$("div.lpop_wrap3").forEach(function(v, i){
+                            jindo.$Element(v).css("display", "none");
+                        });
+                        if(isIconNPayOver == true) {
+                            welLayer.css("display", "block");
+                        } else if(isIconNPayOut){
+                            welLayer.css("display", "none");
+                        }
+                    }, 50);
+                }).attach(aElem, "mouseover").attach(aElem, "mouseout");
+            }
+
+            if (jindo.$Element("buy_list") != null) {
+                jindo.$Element("buy_list").addClass("productBid_" + bid);
+                jindo.$Element("buy_list").addClass("booktype_AUDIO");
+            }
+            buyTip.innerHTML = "<a href=\"/bookdb/price.naver?bid=" + bid + "#book_price\" class='N=a:bta*b.ben,r:,i:'><img src=\"https://ssl.pstatic.net/static/book/image/btn_benefit.png\" width=\"99\" height=\"20\" title=\"구매혜택 상세보기\" alt=\"구매혜택 상세보기\" border=\"0\">";
+            locateAbookBuyLayer(bid);
+//            locateEbookBuyLayer(bid);
+            showBuyLayer(bid, "도서 구매");
+
+            jindo.$$("div.lpop_detail a.btn_close").forEach(function(v, i) {
+                jindo.$Fn(closeSubDetailLayer).attach(jindo.$Element(v), "click");
+            });
+
+            if( jindo.$$("#buy_list > li a")[0] != null) {
+                jindo.$$("#buy_list > li a")[0].focus();
+            }
+        }
+
+        function generateEbookBuyLayer(obj, bid) {
+            if(!!obj && !!obj.productList && obj.productList.length > 0) {
+                var buyList = document.getElementById("buy_list");
+                var buyTip = document.getElementById("buy_tip");
+                var mileage = obj.mileage;
+                var booksBiblio = obj.booksBiblio;
+                var ebookLowestPrice = obj.ebookLowestPrice;
+                var lowestPrice = obj.lowestPrice;
+                var cpNpayInfo = obj.cpNpay;
+                obj = obj.productList;
+                buyList.innerHTML = '';
+                var electronicProductList = '';
+                for(var idx = 0; idx < obj.length; idx++) {
+                    var item = obj[idx];
+                    var cpname_booktype = item.cpName + "_EBOOK";
+                    if(item.bookType != 'PAPER') {
+                        var nPayString = "";
+                        var electronicProductItem = "";
+                        var ebookPrice;
+
+                        if(!item.price) {
+                            continue;
+                        }
+
+                        if(cpNpayInfo[cpname_booktype].rate > 0) {
+                            if(item.price == ebookLowestPrice) {
+                                electronicProductItem = "<li class=\"npay lowest\">";
+                            } else {
+                                electronicProductItem = "<li class=\"npay\">";
+                            }
+
+                            if(item.price && item.price == 0) {
+                                ebookPrice = "무료";
+                            } else if(item.price && item.price > 0) {
+                                ebookPrice = currencyFormat(String(item.price))+"원";
+                            }
+
+                            nPayString = "<div class='npay_wrap'>"
+                                    + "<a href=\"javascript:cpLink('" + item.cpName + "', '" + item.cpBiblioURL + "', '" + item.bid+"', '"+item.goodsID+"');\" title='새창' onclick='callEyelogApi("+item.storeId+");' class='N=a:bls*e.cp,r:" + item.cpName+",i:" + item.bid+"'>" + item.cpKoreanName + "</a> "
+                                    + "<a href='https://pay.naver.com/about' target='_blank' class='ico_npay' id='iconMileage_books_"+item.cpName+"'><img src='https://ssl.pstatic.net/static/book/img/2015/ico_npay_v2.png' width='31' height='13' alt='NPAY'></a>"
+                                    + "<div class='lpop_wrap3' id='iconMileage_books_"+item.cpName+"_layer' style='display:none;'><div class='lpop_arr'></div>"
+                                    + "<div class='lpop_body'>네이버 아이디 하나로 간편구매<br><a href='https://pay.naver.com/about' target='_blank'><em>Naver Pay</em> 서비스 보기 &gt;</a><br></div>"
+                                    + "</div>"
+                                    + "<strong>"+cpNpayInfo[cpname_booktype].rate+"%<span class='blind'>적립</span></strong></div><span><em>" + ebookPrice + "</em> <a href=\"javascript:cpLink('" + item.cpName + "', '" + item.cpBiblioURL + "', '" + item.bid +"', '"+item.goodsID+"');\" title='새창' onclick='callEyelogApi("+item.storeId+");' class='N=a:bls*e.buy,r:"+item.cpName+",i:" + item.bid + "'><img src=\"" + "https://ssl.pstatic.net/static/book/image" + "/btn_buy3.gif\" alt='구매' title='구매' width='29' height='18' class='btn'></a></span></li>";
+
+                            electronicProductItem = electronicProductItem + nPayString;
+                        } else {
+                            if(item.price == ebookLowestPrice) {
+                                electronicProductItem = "<li class=\"lowest\">";
+                            } else {
+                                electronicProductItem = "<li>";
+                            }
+
+                            electronicProductItem = electronicProductItem + "<a href=\"javascript:cpLink('"+item.cpName+"', '"+item.cpBiblioURL+"', '"+item.bid+"', '"+item.goodsID+"');\" title='새창' onclick='callEyelogApi("+item.storeId+");' class='N=a:bls*e.cp,r:"+item.cpName+",i:"+item.bid+"'>" + item.cpKoreanName + "</a> <span><em>" + currencyFormat(String(item.price)) + "원</strong></em> <a href=\"javascript:cpLink('"+item.cpName+"', '"+item.cpBiblioURL+"', '"+item.bid+"', '"+item.goodsID+"');\" title='새창' onclick='callEyelogApi("+item.storeId+");' class='N=a:bls*e.buy,r:"+item.cpName+",i:"+item.bid+"'><img src=\"" + "https://ssl.pstatic.net/static/book/image" + "/btn_buy3.gif\" alt='구매' title='구매' width='29' height='18' class='btn'></a></span></li>";
+                        }
+                        electronicProductList = electronicProductList + electronicProductItem;
+                    }
+                }
+                if(jindo.$Element("buy_list") != null) {
+                    jindo.$Element("buy_list").addClass("productBid_" + bid);
+                    jindo.$Element("buy_list").addClass("booktype_EBOOK");
+                }
+                
+                var booksEbookItem = '';
+                if( !!booksBiblio ) {
+                    if (booksBiblio.price == ebookLowestPrice) {
+                        booksEbookItem = "<li class=\"npay lowest\">";
+                    } else {
+                        booksEbookItem = "<li class=\"npay\">";
+                    }
+                    var availableLend = '';
+                    if ( booksBiblio.availableLend == "1" ) {
+                        availableLend = "대여";
+                    }
+                    booksEbookItem = booksEbookItem + "<div class='npay_wrap'><a href='"+booksBiblio.endPageUrl+"' class='N=a:bls*e.nstore,r:,i:'>" + "네이버 시리즈" + "</a> <a href='#' onclick='return false;' class='ico_npay' id='iconMileage_books'><img src='https://ssl.pstatic.net/static/book/img/2015/ico_npay_v2.png' width='31' height='13' alt='NPAY'></a>"
+                            + " <div class='lpop_wrap3' id='lpop_wrap_books' style='display:none;'><div class='lpop_arr'></div>"
+                            + " <div class='lpop_body'>네이버 아이디 하나로 간편구매<br><a href='https://pay.naver.com/about' target='_blank'><em>Naver Pay</em> 서비스 보기 &gt;</a><br></div>"
+                            + "</div>"
+                            + "<strong>" + booksBiblio.mileage + "%<span class='blind'>적립</span></strong></div><span>"+availableLend+"<em>" + currencyFormat(String(booksBiblio.price)) + "원</em> <a href='"+booksBiblio.endPageUrl+"' class='N=a:bls*e.nstorebuy,r:,i:'><img src='" + "https://ssl.pstatic.net/static/book/image" + "/btn_buy3.gif' alt='구매' title='구매' width='29' height='18' class='btn'></a></span></li>";
+                }
+
+                buyList.innerHTML = buyList.innerHTML + electronicProductList + booksEbookItem;
+                buyTip.innerHTML = "<a href='/bookdb/price.naver?bid=" + bid + "#ebook_price' class='N=a:bls*e.ben,r:,i:'><img src='https://ssl.pstatic.net/static/book/image/btn_benefit.png' width='99' height='20' title='구매혜택 상세보기' alt='구매혜택 상세보기' border='0'>";
+                locateEbookBuyLayer(bid);
+                showBuyLayer(bid, "e북 구매");
+            } else {
+                buyList.innerHTML = '';
+                var buyItem = document.createElement("li");
+                buyList.appendChild(buyItem);
+                buyItem.innerHTML = '구매가 불가합니다.';
+                locateEbookBuyLayer(bid);
+                showBuyLayer(bid, "eBook 구매");
+            }
+
+            jindo.$A(["books"]).forEach(function(cpName,i){
+                
+                jindo.$Fn(function () {
+                    jindo.$Element("lpop_wrap_" + cpName).css("display", "inline");
+                    jindo.$$("#lpop_wrap_" + cpName + " a")[0].focus();
+                }).attach(jindo.$("iconMileage_" + cpName), "focus");
+
+                
+                jindo.$Fn(function() {
+                    jindo.$Element("lpop_wrap_" + cpName).css("display", "none");
+                }).attach(jindo.$$("#lpop_wrap_" + cpName + " a")[1], "blur");
+            });
+
+            if (isIpadBrowser == false) {
+                (function() {
+                    var aElem = jindo.$("iconMileage_books", "lpop_wrap_books","iconMileage_books_yes24", "iconMileage_books_bookpark", "iconMileage_books_kyobo", "iconMileage_books_aladdin");
+                    var isIconMileageOver = false;
+
+                    if(aElem) {
+                        jindo.$Fn(function(e) {
+                            isIconMileageOver = e.type == "mouseover";
+                            isIconMileageOut = e.type == "mouseout";
+                            var el = e.currentElement;
+
+                            if (/(books)$/i.test(el.id)) {
+                                var welLayer = jindo.$Element("lpop_wrap_books");
+                            } else if(el.id == "iconMileage_books_yes24") {
+                                var welLayer = jindo.$Element("iconMileage_books_yes24_layer");
+                            } else if(el.id == "iconMileage_books_bookpark") {
+                                var welLayer = jindo.$Element("iconMileage_books_bookpark_layer");
+                            } else if(el.id == "iconMileage_books_aladdin") {
+                                var welLayer = jindo.$Element("iconMileage_books_aladdin_layer");
+                            } else if(el.id == "iconMileage_books_kyobo") {
+                                var welLayer = jindo.$Element("iconMileage_books_kyobo_layer");
+                            }else {
+                                var welLayer = jindo.$Element("iconMileage_books_yes24_layer");
+                            }
+
+                            window.setTimeout(function() {
+                                closeSubDetailLayer();
+                                if(welLayer != null) {
+                                    if (isIconMileageOver == true) {
+                                        welLayer.css("display", "inline");
+                                    } else if (isIconMileageOut) {
+                                        welLayer.css("display", "none");
+                                    }
+                                }
+                            }, 50);
+                        }).attach(aElem, "mouseover").attach(aElem, "mouseout").attach(aElem, "click");
+                    }
+                })();
+            } else {
+                jindo.$$("a[id^=iconMileage_]").forEach(function(v, i){
+                    jindo.$Fn(showSubDetailLayer).attach(jindo.$Element(v), "click");
+                });
+            }
+
+            jindo.$$("div.lpop_detail a.btn_close").forEach(function(v, i) {
+                jindo.$Fn(closeSubDetailLayer).attach(jindo.$Element(v), "click");
+            });
+
+            if( jindo.$$("#buy_list > li a")[0] != null) {
+                jindo.$$("#buy_list > li a")[0].focus();
+            }
+        }
+
+        function showSubDetailLayer(e) {
+            jindo.$$("div.lpop_wrap2").forEach(function(v, i){
+                jindo.$Element(v).css("display", "none");
+            });
+
+            var nextElement = e.currentElement.nextElementSibling;
+            jindo.$Element(nextElement).css("display", "inline");
+            addCheckoutLink(nextElement.id);
+        }
+
+        function closeSubDetailLayer(e) {
+            if(isIpadBrowser == true) {
+                var parentNode = e.currentElement.parentNode.parentNode.id;
+                removeCheckoutLink(parentNode);
+            }
+
+            jindo.$$("div.lpop_wrap2").forEach(function(v, i){
+                jindo.$Element(v).css("display", "none");
+            });
+            jindo.$$("div.lpop_wrap3").forEach(function(v, i){
+                jindo.$Element(v).css("display", "none");
+            });
+        }
+
+        function addCheckoutLink(id) {
+            var checkLinkObj = jindo.$Element(jindo.$$("#" + id + " p.lcheckout_go")[0]);
+            if (checkLinkObj.child().length < 1) {
+                jindo.$Element(jindo.$$("#" + id + " p.lcheckout_go")[0]).append(document.createTextNode("네이버 아이디 하나로  적립/사용"));
+                jindo.$Element(jindo.$$("#" + id + " p.lcheckout_go")[0]).append("<br>");
+                jindo.$Element(jindo.$$("#" + id + " p.lcheckout_go")[0]).append("<a href='http://mileage.naver.com/customer/home?frm=ec' target='_blank'> <em>네이버 마일리지</em> 서비스 보기 </a>");
+            }
+        }
+
+        function removeCheckoutLink(id) {
+            jindo.$Element(jindo.$$("#" + id + " p.lcheckout_go")[0]).empty();
+        }
+
+        function locateAbookBuyLayer(bid) {
+            if (jindo.$Element("searchBiblioList").hasClass("basic") == true) {
+                var left = jindo.$("btn_audio_buy_img_" + bid).offsetLeft + jindo.$("btn_audio_buy_img_" + bid).width / 2 - 154;
+                var top = jindo.$("searchBiblioList").offsetTop + jindo.$("audio_buy_btn_" + bid).parentNode.parentNode.parentNode.offsetTop + jindo.$("audio_buy_btn_" + bid).parentNode.offsetTop + jindo.$("btn_audio_buy_img_" + bid).height;
+            } else {
+                var left = jindo.$("audio_buy_btn_" + bid).parentNode.parentNode.parentNode.offsetLeft + jindo.$("audio_buy_btn_" + bid).offsetLeft + 47;
+                var index = jindo.$("audio_buy_btn_" + bid).parentNode.parentNode.parentNode.className.split("list_")[1];
+                var top = jindo.$$("#searchBiblioList > li.list_" + index)[0].offsetTop + jindo.$("buy_btn_" + bid).parentNode.offsetTop + jindo.$("btn_audio_buy_img_" + bid).height + 2;
+            }
+            var buyLayer = jindo.$("buy_layer");
+            buyLayer.style.top = top + "px";
+            buyLayer.style.left = left + "px";
+        }
+
+        function locateBuyLayer(bid) {
+            if (jindo.$Element("searchBiblioList").hasClass("basic") == true) {
+                var left = jindo.$("btn_buy_img_" + bid).offsetLeft + jindo.$("btn_buy_img_" + bid).width / 2 - 154;
+                var top = jindo.$("searchBiblioList").offsetTop + jindo.$("buy_btn_" + bid).parentNode.parentNode.parentNode.offsetTop + jindo.$("buy_btn_" + bid).parentNode.offsetTop + jindo.$("btn_buy_img_" + bid).height;
+            } else {
+                var left = jindo.$("buy_btn_" + bid).parentNode.parentNode.parentNode.offsetLeft + jindo.$("buy_btn_" + bid).offsetLeft - 3;
+                var index = jindo.$("buy_btn_" + bid).parentNode.parentNode.parentNode.className.split("list_")[1];
+                var top = jindo.$$("#searchBiblioList > li.list_" + index)[0].offsetTop + jindo.$("buy_btn_" + bid).parentNode.offsetTop + jindo.$("btn_buy_img_" + bid).height + 2;
+            }
+            var buyLayer = jindo.$("buy_layer");
+            buyLayer.style.top = top + "px";
+            buyLayer.style.left = left + "px";
+        }
+
+        function locateEbookBuyLayer(bid) {
+            if (jindo.$Element("searchBiblioList").hasClass("basic") == true) {
+                var left = jindo.$("btn_ebook_buy_img_" + bid).offsetLeft + jindo.$("btn_ebook_buy_img_" + bid).width / 2 - 154;
+                var top = jindo.$("searchBiblioList").offsetTop + jindo.$("ebook_buy_btn_" + bid).parentNode.parentNode.parentNode.offsetTop + jindo.$("ebook_buy_btn_" + bid).parentNode.offsetTop + jindo.$("btn_ebook_buy_img_" + bid).height;
+            } else {
+                var left = jindo.$("ebook_buy_btn_" + bid).parentNode.parentNode.parentNode.offsetLeft + jindo.$("ebook_buy_btn_" + bid).offsetLeft + 47;
+                var index = jindo.$("ebook_buy_btn_" + bid).parentNode.parentNode.parentNode.className.split("list_")[1];
+                var top = jindo.$$("#searchBiblioList > li.list_" + index)[0].offsetTop + jindo.$("ebook_buy_btn_" + bid).parentNode.offsetTop + jindo.$("btn_ebook_buy_img_" + bid).height + 2;
+            }
+            var buyLayer = jindo.$("buy_layer");
+            buyLayer.style.top = top + "px";
+            buyLayer.style.left = left + "px";
+        }
+
+        function showBuyLayer(bid, title) {
+            lastBuyLayerBid = bid;
+            lastShowLayerElement = buyLayer;
+            document.getElementById("buy_layer_title").innerHTML = title;
+            buyLayer.className = "layerpopup on";
+        }
+
+        function hideBuyLayer() {
+            buyLayer.className = "layerpopup";
+            var bid = "";
+            var booktype = "";
+            if ( jindo.$Element("buy_list") != null) {
+                if ( jindo.$Element("buy_list").className().split("productBid_")[1] != null )
+                    bid = jindo.$Element("buy_list").className().split("productBid_")[1].split(" ")[0];
+                if( jindo.$Element("buy_list").className().split("booktype_")[1] != null )
+                    booktype = jindo.$Element("buy_list").className().split("booktype_")[1].split(" ")[0];
+            }
+
+            if (bid != undefined && bid != "") {
+                if( booktype == "EBOOK" ) {
+                    $("ebook_buy_btn_" + bid).focus();
+                } else if (booktype == "AUDIO") {
+                    $("audio_buy_btn_" + bid).focus();
+                } else {
+                    $("buy_btn_" + bid).focus();
+                }
+                $Element("buy_list").removeClass("productBid_" + bid);
+                $Element("buy_list").removeClass("booktype_" + booktype);
+            }
+            return false;
+        }
+
+        jindo.$Fn(function() {
+            jindo.$Fn(function(e) {
+                // 일반 검색으로 검색하기
+                location.href = location.href.replace(/&qdt=\d/, "") + "&qdt=0";
+                e.stopDefault();
+            }).attach(jindo.$("off_qdt"), "click");
+            detailSearchEvents["link_detail_search"] = makeEventHandler(toggleDetailSearch, jindo.$("link_detail_search"), "click");
+        }).attach(window, "load");
+
+
+        // 왼쪽 요약 검색으로 재검색을 할 경우.
+        function loadFilterListByAsideSearch(queryString, filterType, filterValue) {
+            if(true) {
+                hideBuyLayer();
+            }
+
+            loadFilter = true;
+
+            jindo.$Element("wrap").append(buyLayer);
+
+            var frameFilterValue = '';
+            if((filterType > 1 && filterValue != "") || (filterType == 1 && frameFilterValue != filterValue)) {
+                document.getElementById("all").className="N=a:lft.all,r:,i:"; //전체 목록 비활성화
+            }
+            // 저자 검색일 경우 상단 저자 정보 출력을 위해 요약 정보가 포함된 검색으로 호출한다.
+            var SEARCH_FILTER_AUTHOR = 1;
+            var serviceIc = (filterType <= SEARCH_FILTER_AUTHOR) ? 'service.author' : 'service';
+            var buyAllow = 0 ;
+            var ebook = 0;
+
+            var url = "/search/search_in.naver";
+            
+            jindo.$Ajax(url+"?query=%2528%25EA%25B8%2588%25EB%2582%259C%25EC%2583%2588%25EC%259D%2598%2529%2520%25ED%2581%25B4%25EB%259E%2598%25EC%258B%259D%2520%25EC%2597%25AC%25ED%2596%2589&pattern=1&filterType="+filterType+"&filterValue="+filterValue+queryString+"&buyAllow="+buyAllow+"&serviceIc="+serviceIc + "&ebook=" + ebook, {
+                onload : function(res) {
+                    document.getElementById("content").innerHTML = res.text();
+                    if(true) {
+                        jindo.$Element(jindo.$$("#content > div.paginate")[0]).before(buyLayer);
+                    }
+
+                    if(queryString.indexOf("viewType=image") >=0 ) { // 이미지형
+                        generateTitleAndAuthor();
+                    } else { // 리스트형
+                        generateDescription();
+                    }
+                    selectedFilterValue(filterType, filterValue);
+                    // 저자+패턴의 경우 해당 저자 선택
+                    
+                }
+            }).request();
+        }
+
+        // 저자검색 등 검색결과 내에서 재검색을 할 경우 좌측 메뉴의 값을 구한다.
+        function loadFilterAsideListBySearch(queryString, filterType, filterValue) {
+            var frameFilterValue = '';
+            if((filterType > 1 && filterValue != "") || (filterType == 1 && frameFilterValue != filterValue)) {
+                document.getElementById("all").className="N=a:lft.all,r:,i:"; //전체 목록 비활성화
+            }
+
+            var url = "/search/search_aside.naver";
+            $Ajax(url+"?query=%2528%25EA%25B8%2588%25EB%2582%259C%25EC%2583%2588%25EC%259D%2598%2529%2520%25ED%2581%25B4%25EB%259E%2598%25EC%258B%259D%2520%25EC%2597%25AC%25ED%2596%2589&pattern=0&filterType="+filterType+"&filterValue="+filterValue+queryString+"&buyAllow=0&serviceIc=service.summary&ebook=0", {
+                onload : function(res) {
+                    jindo.$Element("aside").replace(res.text());
+
+                    selectedFilterValue(filterType, filterValue);
+                    // 저자+패턴의 경우 해당 저자 선택
+                    
+                    jindo.$Element("aside").css("display", "block");
+                }
+            }).request();
+        }
+
+        // 검색결과 내에 재검색을 할경우
+        function loadFilterList(queryString, filterType, filterValue) {
+            hideBuyLayer();
+            loadFilter = true;
+
+            jindo.$Element("wrap").append(buyLayer);
+
+            var frameFilterValue = '';
+            if((filterType > 1 && filterValue != "") || (filterType == 1 && frameFilterValue != filterValue)) {
+                document.getElementById("all").className="N=a:lft.all,r:,i:"; //전체 목록 비활성화
+            }
+            // 저자 검색일 경우 상단 저자 정보 출력을 위해 요약 정보가 포함된 검색으로 호출한다.
+            var SEARCH_FILTER_AUTHOR = 1;
+            var serviceIc = (filterType <= SEARCH_FILTER_AUTHOR) ? 'service.author' : 'service';
+            var buyAllow = (jindo.$("buyAllow") && jindo.$("buyAllow").checked) ? 1 : 0 ;
+            var ebook = (jindo.$("ebook") && jindo.$("ebook").checked) ? 1 : 0 ;
+            var abook = (jindo.$("audiobook") && jindo.$("audiobook").checked) ? 1 : 0 ;
+
+            var url = "/search/search_in.naver";
+            
+            $Ajax(url+"?query=%2528%25EA%25B8%2588%25EB%2582%259C%25EC%2583%2588%25EC%259D%2598%2529%2520%25ED%2581%25B4%25EB%259E%2598%25EC%258B%259D%2520%25EC%2597%25AC%25ED%2596%2589&pattern=1&filterType="+filterType+"&filterValue="+filterValue+queryString+"&buyAllow="+buyAllow+"&serviceIc="+serviceIc + "&ebook=" + ebook + "&abook=" + abook, {
+                onload : function(res) {
+                    document.getElementById("content").innerHTML = res.text();
+                    if(true) {
+                        jindo.$Element(jindo.$$("#content > div.paginate")[0]).before(buyLayer);
+                    }
+
+                    if(queryString.indexOf("viewType=image") >=0 ) { // 이미지형
+                        generateTitleAndAuthor();
+                    } else { // 리스트형
+                        generateDescription();
+                    }
+                    selectedFilterValue(filterType, filterValue);
+                    // 저자+패턴의 경우 해당 저자 선택
+                    
+                }
+            }).request();
+        }
+
+        function getBuyAllow() {
+            var buyAllowObj = document.getElementById("buyAllow");
+            var buyAllow = 0;
+            if(buyAllowObj != null && buyAllowObj != "undefined") {
+                if(buyAllowObj.checked) {
+                    buyAllow = 1;
+                }
+            }
+            return buyAllow;
+        }
+
+        /**
+         * 2줄 title 노출, 1줄 저자
+         */
+        function generateTitleAndAuthor() {
+            var content = document.getElementById("searchBiblioList");
+            if(content != null && content != "undefined" ) {
+                var searchBiblioList = content.getElementsByTagName("dl");
+
+                if(searchBiblioList != null && searchBiblioList != "undefined" ) {
+                    for (var i=0;i<searchBiblioList.length && i < 10;i++) {
+                        setSubTitleAndAuthor(searchBiblioList[i]);
+                    }
+
+                    for (var i=10;i<searchBiblioList.length;i++) {
+                        setSubTitleAndAuthor(searchBiblioList[i]);
+                    }
+                }
+            }
+        }
+
+        function setSubTitleAndAuthor(searchBiblio) {
+            var item = searchBiblio.getElementsByTagName("dt")[1];
+            if(item != null && item != "undefined" ) {
+                var titleParam = {
+                    "prefix" : "<a href='/bookdb/book_detail.naver?bid="+item.getAttribute("bid")+"' target='_blank' class='N=a:bls.title,r:"+item.getAttribute("statusCount")+",i:"+item.getAttribute("gdid")+"'/>",
+                    "postfix": "</a>" + getIcon19(item.getAttribute("isAdultBook")),
+                    "sourceText": item.innerHTML,
+                    "maxWidth": item.offsetWidth-5,
+                    "tail": "..",
+                    "maxLine": 2
+                };
+                CutLines.putSummary(item, titleParam);
+            }
+
+            //author
+            var author = searchBiblio.getElementsByTagName("dd")[0];
+            var etcInfo = author.getAttribute("authorEtc");
+            var maxWidth = author.offsetWidth;
+            if(etcInfo.length > 0) {
+                maxWidth = maxWidth - 50; //외 N명 노출을 위해
+            }
+            if(author != null && author != "undefined" ) {
+                var authorParam = {
+                    "prefix" : "<a href="+author.getAttribute("link")+" class='N=a:bls.author,r:"+author.getAttribute("statusCount")+",i:"+author.getAttribute("authorId")+"'/>",
+                    "postfix": "</a>",
+                    "sourceText": author.innerHTML,
+                    "maxWidth": maxWidth,
+                    "tail": "..",
+                    "maxLine": 1
+                };
+                CutLines.putSummary(author, authorParam);
+            }
+            author.innerHTML = author.innerHTML + etcInfo;
+        }
+
+        /**
+         * 2줄 책 소개 or 목차
+         */
+        function generateDescription() {
+            var content = document.getElementById("searchBiblioList");
+            var isBookSearch = true;
+
+            if(! isBookSearch) { // 본문 검색의 경우만 소개 정보 말줄임 처리 .
+                if(content != null && content != "undefined" ) {
+                    var searchBiblioList = content.getElementsByTagName("dl");
+                    if(searchBiblioList != null && searchBiblioList != "undefined" ) {
+                        for (var i=0;i<searchBiblioList.length && i < 5;i++) {
+                            subDescription(searchBiblioList[i], isBookSearch);
+                        }
+
+                        for (var i = 5; i < searchBiblioList.length; i++) {
+                            subDescription(searchBiblioList[i], isBookSearch);
+                        }
+                    }
+                }
+            }
+        }
+
+        function subDescription(searchBiblio, isBookSearch) {
+            var item;
+            if(isBookSearch) {
+                item = searchBiblio.getElementsByTagName("dd")[2];
+            } else {
+                item = searchBiblio.getElementsByTagName("dd")[1];
+            }
+            if(item != null && item != "undefined" ) {
+                var param = {"sourceText": item.innerHTML,
+                    "maxWidth": 750, //ie 6.0 bug fix
+                    "tail": "..",
+                    "maxLine": item.getAttribute("line")
+                };
+                CutLines.putSummary(item, param);
+            }
+        }
+
+        function getPageLink(page, queryString, filterType) {
+            hideBuyLayer();
+            var url = "/search/search_in.naver";
+            
+            var ebook = (jindo.$("ebook") && jindo.$("ebook").checked) ? 1 : 0 ;
+            var abook = (jindo.$("audiobook") && jindo.$("audiobook").checked) ? 1 : 0 ;
+            // 저자 검색일 경우 상단 저자 정보 출력을 위해 요약 정보가 포함된 검색으로 호출한다.
+            var SEARCH_FILTER_AUTHOR = 1;
+            var serviceIc = (filterType <= SEARCH_FILTER_AUTHOR) ? 'service.author' : 'service';
+            NAjax.load(url+"?query=%2528%25EA%25B8%2588%25EB%2582%259C%25EC%2583%2588%25EC%259D%2598%2529%2520%25ED%2581%25B4%25EB%259E%2598%25EC%258B%259D%2520%25EC%2597%25AC%25ED%2596%2589&"+queryString+"&serviceIc="+serviceIc+"&buyAllow="+getBuyAllow() + "&ebook=" + ebook + "&abook=" + abook + "&page="+page,{"callback":generateSearchInfo,"returnType":NAjax.TEXT}, queryString);
+            return false;
+        }
+
+        function generateSearchInfo(html, queryString) {
+            jindo.$Element("wrap").append(buyLayer);
+            document.getElementById("content").innerHTML = html;
+            if(true) {
+                jindo.$Element(jindo.$$("#content > div.paginate")[0]).before(buyLayer);
+            }
+            if(queryString.indexOf("viewType=image") >=0 ) {
+                generateTitleAndAuthor();
+            } else {
+                generateDescription();
+            }
+            scrollTop();
+        }
+
+        function scrollTop() {
+            document.body.scrollTop  = "0px";
+            document.documentElement.scrollTop  = "0px";
+        }
+
+        
+
+        function emptyImg(obj) {
+            obj.src = "https://ssl.pstatic.net/static/book/image/noimg4.gif";
+            obj.width = "106";
+            obj.height = "154";
+        }
+
+        function callEyelogApi(storeId) {
+            if(!storeId) {
+                return ;
+            }
+
+            var obj = {
+                'storeId':storeId
+            }
+
+            logeye.call.setParams(obj);
+            logeye.call.callLogEye();
+        }
+    </script><script type="text/javascript" src="https://ssl.pstatic.net/static/common/js/cs_ops_webncc.js"></script>
+	<div id="footer">
+		<h3 class="blind">푸터</h3>
+		<ul class="NE=a:fot">
+		<li><a class="NPI=a:agreement" href="http://www.naver.com/rules/service.html" target="_blank">이용약관</a></li>
+		<li><a class="NPI=a:privacy" href="http://www.naver.com/rules/privacy.html" target="_blank"><strong>개인정보처리방침</strong></a></li>
+		<li><a class="NPI=a:disclaimer" href="http://www.naver.com/rules/disclaimer.html" target="_blank">책임의 한계와 법적고지</a></li>
+		<li><a class="NPI=a:library" href="/guide/nl/index.naver" target="_blank">도서관안내</a></li>
+		<li><a class="NPI=a:help" href="https://help.naver.com/support/service/main.nhn?serviceNo=702" target="_blank">책 고객센터</a></li>
+		</ul>
+		<p class="info">네이버책은 통신판매중개자로서 통신판매의 당사자가 아니며, 상품 주문, 배송 및 환불의 의무와 책임은 각 판매업체에 있습니다.<br>
+                본 콘텐츠의 저작권은 저자 또는 제공처에 있으며, 이를 무단 이용하는 경우 저작권법 등에 따라 법적책임을 질 수 있습니다.<br>
+                외부 저작권자가 제공한 콘텐츠는 네이버의 입장과 다를 수 있습니다.</p>
+                <p class="info">
+                        사업자등록번호 : 220-81-62517<span>통신판매업 신고번호</span> : 경기성남 제 2006 - 692호<span>대표이사 : 한성숙</span><span><a href="http://www.ftc.go.kr/info/bizinfo/communicationList.jsp">사업자등록정보 확인</a></span><br>
+                        주소 : 경기도 성남시 분당구 불정로 6 네이버 그린팩토리 463-867<span>대표전화 : 1588-3820</span>
+                </p>
+		<address>
+		<a href="http://www.navercorp.com/" target="_blank" class="logo N=a:fot.nhn">NAVER</a>
+		Copyright &copy;
+		<a class="N=a:fot.nhncorp" href="http://www.navercorp.com/" target="_blank"><strong>NAVER Corp.</strong></a>
+		All Rights Reserved.
+		</address>
+	</div>
+</div>
+<script type="text/javascript">
+
+function applyAutoComplete() {
+	smartSearch = new nhn.AjaxSuggestUS("nx_query", "autoFrame", {
+		url : 'https://ac.book.naver.com/ac',
+		sFromName : "snbSearchForm",
+		triangleBtn : "nautocomplete",
+		sListMaxLength: 50,
+		request_type : "jsonp",
+		request_data : {q:"{query}", t_koreng: "1", st:"111", r_lt:"101", r_format:"json", q_enc:"UTF-8", r_enc:"UTF-8" , r_unicode:"0", r_escape:"1"}
+	}).attach({
+		actSubmit : function(){
+			this.elForm.submit();
+		},
+		acShow : function(){
+			var detailSearchLayer = jindo.$Element("detailSearchLayer");
+			if (!!detailSearchLayer && detailSearchLayer.visible()) {
+				detailSearchLayer.hide();
+			}
+		}
+	})
+}
+
+
+function loadAutoCompleteJS() {
+	var domscript = document.createElement('script');
+	domscript.src = "/js/autoCompleteUS.js?20211207091736";
+	domscript.onloadDone = false;
+	domscript.onload = function() { 
+	    if (!domscript.onloadDone) {
+	        domscript.onloadDone = true;
+	        applyAutoComplete(); 
+	    }
+	};
+	domscript.onreadystatechange = function() { 
+	    if (("loaded" === domscript.readyState || "complete" === domscript.readyState) && !domscript.onloadDone) {
+	        domscript.onloadDone = true; 
+	        applyAutoComplete();
+	    }
+	}
+	document.getElementsByTagName('head')[0].appendChild(domscript);
+}
+
+jindo.$Fn(function(){	
+	getGNB();
+	jindo.$("autoFrame").contentWindow.location.href="/html/reatcmp.html?20211207091736";
+
+	jindo.$Fn(function(event) {
+		var key = event.key();
+		var TAB_KEY_CODE = 9;
+		if (key.shift == false && key.keyCode == TAB_KEY_CODE) {
+			nextLeftCategoryFocus();
+			event.stopDefault();
+		}
+	}).attach(jindo.$("naver_bookCast"), "keydown");
+
+	jindo.$Fn(function(event) {
+		var key = event.key();
+		var TAB_KEY_CODE = 9;
+		if (key.shift == true && key.keyCode == TAB_KEY_CODE) {
+			nextFocusSelect('mobile_button');
+			event.stopDefault();
+		}
+	}).attach(jindo.$("search_category"), "keydown");
+	
+	if(jindo.$("today_book_img") != null) {
+		jindo.$Fn(function(event) {
+			var key = event.key();
+			var TAB_KEY_CODE = 9;
+			if (key.shift == true && key.keyCode == TAB_KEY_CODE) {
+				nextFocusSelect('last_left_category');
+				event.stopDefault();
+			}
+		}).attach(jindo.$("today_book_img"), "keydown");
+	}
+	
+	if(jindo.$("last_left_category") != null) {
+		jindo.$Fn(function(event) {
+			var key = event.key();
+			var TAB_KEY_CODE = 9;
+			if (key.shift == false && key.keyCode == TAB_KEY_CODE) {
+				nextFocusSelect('today_book_img');
+				event.stopDefault();
+			}
+		}).attach(jindo.$("last_left_category"), "keydown");
+	}
+
+	jindo.$Fn(function(event) {
+		var key = event.key();
+		var TAB_KEY_CODE = 9;
+		if (key.shift == false && key.keyCode == TAB_KEY_CODE) {
+			nextFocusSelect('search_category');
+			event.stopDefault();
+		}
+	}).attach(jindo.$("btn_detail_search"), "keydown");
+	
+	if(jindo.$$("#lc_100 > a")[0] != null) {
+		jindo.$Fn(function(event) {
+			var key = event.key();
+			var TAB_KEY_CODE = 9;
+			if (key.shift == true && key.keyCode == TAB_KEY_CODE) {
+				jindo.$Element("lc_100").removeClass("over");
+				jindo.$("naver_bookCast").focus();
+				event.stopDefault();
+			}
+		}).attach(jindo.$$("#lc_100 > a")[0], "keydown");
+	}
+	
+	if(jindo.$("yes24_bestseller", "todaybook_recent", "theme_rcmmd", "wish_list") != null) {
+		jindo.$Fn(function(event) {
+			var key = event.key();
+			var TAB_KEY_CODE = 9;
+			if (key.shift == true && key.keyCode == TAB_KEY_CODE) {
+				nextFocusSelect("naver_bookCast");
+				event.stopDefault();
+			}
+		}).attach(jindo.$("yes24_bestseller", "todaybook_recent", "theme_rcmmd", "wish_list"), "keydown");
+	}
+	
+	if(jindo.$("naverMe") != null) {
+		jindo.$Fn(function(event) {
+			var key = event.key();
+			var TAB_KEY_CODE = 9;
+				
+			
+				
+		}).attach(jindo.$("naverMe"), "keydown");
+	}
+	
+	if(jindo.$("todaybook_cate") != null) {
+		jindo.$Fn(function(event) {
+			var key = event.key();
+			var TAB_KEY_CODE = 9;
+			if (key.shift == false && key.keyCode == TAB_KEY_CODE) {
+				focusNaverMeExplain();
+				event.stopDefault();
+			}
+		}).attach(jindo.$("todaybook_cate"), "keydown");
+	}
+	
+	jindo.$Fn(function() {
+		jindo.$Element("gnb_user").toggle();
+	}).attach(jindo.$("gnb_nicknm"), "focus");
+	
+	jindo.$Fn(function() {
+		jindo.$Element("gnb_more").toggle();
+	}).attach(jindo.$("more"), "focus");
+}).attach(window, "load");
+</script>
+<script type="text/javascript">
+initKey();
+function initKey() {
+	document.onkeydown = keypress;
+}
+function keypress(ev) {
+	if(ev != null && ev != "undefined") {
+		if(ev.keyCode == 113) {
+			document.getElementById("nx_query").imeMode ='active';
+			document.getElementById("nx_query").select();
+		}
+	}
+}
+</script><script type="text/javascript">
+	
+		lcs_do();
+	
+	var CH = {
+		text: function(obj) {
+			var text = obj.textContent;
+			if(text) {
+				return text.replace(/\s/g,"");
+			}
+			return "";
+		},
+		url: function(obj) {
+			if(obj.href) {
+					return obj.href;
+			}
+			return "";
+		},
+		query: function(obj) {
+			var q = "";
+			if(obj) {
+				q = "?";
+				for(var key in obj) {
+					q += key + "=" + encodeURIComponent(obj[key]) + "&";
+				}
+				q += "timestamp=" + new Date().getTime();
+			}
+			return q;
+		},
+		send: function(query) {
+			var sReq = "https://book.naver.com/monitor/cc" + query;
+			var oImg = new Image();
+			oImg.src = sReq;
+		},
+		mclickcr : function(obj, area, cid, rank, evt) {
+			var p = jindo.$Event().pos();
+			var size = jindo.$Document().clientSize();
+			var obj = {
+				nsc : nsc,
+				text : '',
+				url : CH.url(obj),
+				area : area,
+				cid : cid,
+				rank : rank,
+				pageX : p.pageX,
+				pageY : p.pageY,
+				width : size.width
+			}
+			var q = CH.query(obj);
+			CH.send(q);
+		},
+		mnclk: function(oItem, sArea, sCid, sRank) {
+			var obj = {
+				nsc : nsc,
+				text : CH.text(oItem),
+				url : CH.url(oItem),
+				area : sArea,
+				cid : sCid,
+				rank : sRank
+			}
+			var q = CH.query(obj);
+			CH.send(q);
+		}
+	};
+	jindo.$Fn(function() {
+		if(typeof clickcr != "undefined") {
+			_clickcr = clickcr;
+			clickcr = function(obj, area, cid, rank, evt, opt) {
+				try {
+				CH.mclickcr(obj, area, cid, rank, evt);	
+				}catch(e){}
+				_clickcr(obj, area, cid, rank, evt, opt);
+			}
+		}
+
+		
+	}).attach(window, "load");
+
+
+	
+</script>
+</body>
+</html>
