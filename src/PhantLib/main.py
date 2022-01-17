@@ -6,7 +6,7 @@ import re
 
 
 # 전역변수 : 위치는 추후 조정
-path = ".//rsc/myloan_hist.xls"                                     # 상대 경로 : '.'으로 시작
+path = "../../rsc/myloan_hist.xls"                                     # 상대 경로 : '.'으로 시작
 
 
 # 엑셀 파일 존재 확인
