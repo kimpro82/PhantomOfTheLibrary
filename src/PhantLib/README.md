@@ -144,7 +144,7 @@ if __name__ == '__main__' :
 
 ### - [특수문자 포함한 책 제목 검색시 오류 해결 (2022.01.31)](#목록)
 
-#### Mainly changed part 1 : parse1()
+#### Mainly changed part 1 : `parse1()`
 ```python
 # 네이버 > 책 에서 책 제목으로 검색한 결과 리스트에서 첫번째 항목 url 얻기
 def parse1(df) :
@@ -178,7 +178,7 @@ def parse1(df) :
     return href
 ```
 
-#### Mainly changed part 2 : parse2()
+#### Mainly changed part 2 : `parse2()`
 ```python
 # 검색 결과 첫번째 항목의 연결 페이지에서 도서분류 얻기
 def parse2(href) :
