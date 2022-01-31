@@ -142,35 +142,7 @@ if __name__ == '__main__' :
 ```
 
 
-### [특수문자 포함한 책 제목 검색시 오류 해결 (2022.01.31)](#목록)
----
-
-#### Output
-```
-파일 경로가 정상적으로 확인되었습니다.
-……
-책 제목(수정 전) : 파이썬 증권 데이터 분석
-책 제목(수정 후) : 파이썬 증권 데이터 분석
-검색 결과 첫 번째 책 링크 : http://book.naver.com/bookdb/book_detail.naver?bid=16381920
-책 제목(수정 전) : (초보자를 위한)C++ 200제
-책 제목(수정 후) :  초보자를 위한 C   200제
-검색 결과 첫 번째 책 링크 : http://book.naver.com/bookdb/book_detail.naver?bid=13553653
-책 제목(수정 전) : (금난새의) 클래식 여행
-책 제목(수정 후) :  금난새의  클래식 여행
-검색 결과 첫 번째 책 링크 : http://book.naver.com/bookdb/book_detail.naver?bid=6942964
-책 제목(수정 전) : Paint It Rock : 남무성의 만화로 보는 록의 역사 . 1 = (A)comic book of rock history
-책 제목(수정 후) : Paint It Rock   남무성의 만화로 보는 록의 역사   1    A comic book of rock history
-검색 결과를 가져오지 못 했습니다.
-책 제목(수정 전) : (작곡가가 직접 가르쳐주는)작곡 테크닉 99
-책 제목(수정 후) :  작곡가가 직접 가르쳐주는 작곡 테크닉 99
-검색 결과 첫 번째 책 링크 : http://book.naver.com/bookdb/book_detail.naver?bid=13762116
-책 상세 페이지를 가져오는 데 실패했습니다.
-['컴퓨터/IT', 'IT 전문서', '프로그래밍언어']
-['컴퓨터/IT', 'IT 전문서', '프로그래밍언어']
-['예술/대중문화']
-[]
-['예술/대중문화', '음악', '음악이론/음악사']
-```
+### - [특수문자 포함한 책 제목 검색시 오류 해결 (2022.01.31)](#목록)
 
 #### Mainly changed part 1 : parse1()
 ```python
@@ -233,4 +205,31 @@ def parse2(href) :
             sections.append([])
 
     return sections
+```
+
+#### Output
+```
+파일 경로가 정상적으로 확인되었습니다.
+……
+책 제목(수정 전) : 파이썬 증권 데이터 분석
+책 제목(수정 후) : 파이썬 증권 데이터 분석
+검색 결과 첫 번째 책 링크 : http://book.naver.com/bookdb/book_detail.naver?bid=16381920
+책 제목(수정 전) : (초보자를 위한)C++ 200제
+책 제목(수정 후) :  초보자를 위한 C   200제
+검색 결과 첫 번째 책 링크 : http://book.naver.com/bookdb/book_detail.naver?bid=13553653
+책 제목(수정 전) : (금난새의) 클래식 여행
+책 제목(수정 후) :  금난새의  클래식 여행
+검색 결과 첫 번째 책 링크 : http://book.naver.com/bookdb/book_detail.naver?bid=6942964
+책 제목(수정 전) : Paint It Rock : 남무성의 만화로 보는 록의 역사 . 1 = (A)comic book of rock history
+책 제목(수정 후) : Paint It Rock   남무성의 만화로 보는 록의 역사   1    A comic book of rock history
+검색 결과를 가져오지 못 했습니다.
+책 제목(수정 전) : (작곡가가 직접 가르쳐주는)작곡 테크닉 99
+책 제목(수정 후) :  작곡가가 직접 가르쳐주는 작곡 테크닉 99
+검색 결과 첫 번째 책 링크 : http://book.naver.com/bookdb/book_detail.naver?bid=13762116
+책 상세 페이지를 가져오는 데 실패했습니다.
+['컴퓨터/IT', 'IT 전문서', '프로그래밍언어']
+['컴퓨터/IT', 'IT 전문서', '프로그래밍언어']
+['예술/대중문화']
+[]
+['예술/대중문화', '음악', '음악이론/음악사']
 ```
