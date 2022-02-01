@@ -37,7 +37,7 @@ def parse1(df) :
     href =[]
 
     # for bookTitle in df.iloc[:, 1] :
-    for bookTitle in df.iloc[0:5, 1] :                                      # 테스트 : [1, 3] 에러 발생 - 추후 해결
+    for bookTitle in df.iloc[0:5, 1] :                                      # 테스트 : 1~5행만 실행
         print("책 제목(수정 전) :", bookTitle)                               # 테스트
         bookTitleEncoded = re.sub('[^\s0-9a-zA-Z가-힣]', ' ', bookTitle)
         params['query'] = bookTitleEncoded
