@@ -1,4 +1,4 @@
-# [Phantom Of The Library](../../README.md#phantom-of-the-library)
+# [Phantom Of The Library](/README.md#phantom-of-the-library)
 
 
 ### \<목록>
