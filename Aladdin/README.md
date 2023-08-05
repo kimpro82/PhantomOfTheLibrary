@@ -93,14 +93,14 @@
     <details open="">
       <summary>실행 결과</summary>
 
-    ```json
+    ```py
     {'itemOffStoreList': [],
     'link': 'http://www.aladin.co.kr/search/wsearchresult.aspx?SearchTarget=UsedStore&amp;SearchWord=K172834409&amp;partner=openAPI',
     'pubDate': 'Sat, 05 Aug 2023 07:42:07 GMT',
     'query': 'isbn13=9788957825945',
     'version': '20131101'}
     ```
-    ```json
+    ```py
     {'itemOffStoreList': [{'link': 'http://www.aladin.co.kr/usedstore/wproduct.aspx?ItemId=2133101&amp;OffCode=SangIn&amp;partner=openAPI',
                           'offCode': 'SangIn',
                           'offName': '대구상인점'},
