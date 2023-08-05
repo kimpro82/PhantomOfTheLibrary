@@ -63,7 +63,7 @@
         주어진 ISBN13 도서에 대한 중고상품 보유 매장을 검색하는 함수입니다.
 
         Args:
-            book_isbn13 (str)   : 조회할 도서의 ISBN13
+            _book_isbn13 (str)  : 조회할 도서의 ISBN13
 
         Returns:
             dict                : 중고상품 보유 매장 정보를 담은 JSON 데이터
