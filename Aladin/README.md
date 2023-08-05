@@ -1,6 +1,6 @@
-# [Aladdin Open API](/README.md#목록)
+# [Aladin Open API](/README.md#목록)
 
-  [알라딘(Aladdin)](https://www.aladin.co.kr/)에서 제공하는 Open API를 이용하여 도서 구매 등에 실제로 활용할 수 있는 유용한 프로그램을 만들고자 함.
+  [알라딘(Aladin)](https://www.aladin.co.kr/)에서 제공하는 Open API를 이용하여 도서 구매 등에 실제로 활용할 수 있는 유용한 프로그램을 만들고자 함.
 
 
 ### \<참고 자료>
