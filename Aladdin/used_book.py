@@ -47,6 +47,11 @@ if __name__ == "__main__":
     for book_isbn13 in books:
         store_info  = search_used_stores(book_isbn13)
         pprint.pprint(store_info)
+        if len(store_info['itemOffStoreList']) > 0:
+            offNames = []
+            for itemOffStore in store_info['itemOffStoreList']:
+                offNames.append(itemOffStore['offName'])
+            print(offNames)
 
         time.sleep(1)                                       # API 요청 사이에 1초 딜레이
         print()
