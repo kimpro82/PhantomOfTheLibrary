@@ -3,6 +3,13 @@
   [알라딘(Aladdin)](https://www.aladin.co.kr/)에서 제공하는 Open API를 이용하여 도서 구매 등에 실제로 활용할 수 있는 유용한 프로그램을 만들고자 함.
 
 
+### \<참고 자료>
+
+  - [알라딘 Open API 블로그](https://blog.aladin.co.kr/openapi/)
+    - [예제 코드](https://blog.aladin.co.kr/openapi/5353301)
+  - [알라딘 Open API 매뉴얼 (Google Docs)](https://docs.google.com/document/d/1mX-WxuoGs8Hy-QalhHcvuV17n50uGI2Sg_GHofgiePE/edit)
+
+
 ### \<목록>
 
 - [중고상품 보유 매장 검색 (2023.08.05)](#중고상품-보유-매장-검색-20230805)
@@ -10,8 +17,8 @@
 
 ## [중고상품 보유 매장 검색 (2023.08.05)](#목록)
 
-  - ISBN13 코드를 담은 튜플 `books`(테스트용)를 순회하며 request를 발송함
-  - 사용성 제한적
+  - ISBN13 코드를 담은 튜플 `books`(테스트용)를 순회하며 request를 발송 (`ItemOffStoreList`)
+  - 사용성 제한적으로 판단
     - 오프라인 매장의 보유 중고상품만을 조회  
       (온라인 중고 / 이 광활한 우주점 / 판매자 중고 카테고리 미조회)
     - 단지 보유지점명만을 제공 (가격, 재고권수, 책 상태 등 미제공)
