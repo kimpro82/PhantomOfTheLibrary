@@ -5,7 +5,7 @@
 
 ### \<목록>
 
-- [Aladdin API](/Aladdin)
+- [Aladdin Open API](/Aladdin)
   - [중고상품 보유 매장 검색 (2023.08.05)](/Aladdin/README.md#중고상품-보유-매장-검색-20230805)
 - [Phantom Of The Library](/PhantLib)  
   네이버 도서 페이지 개편으로 재작성 예정
