@@ -5,12 +5,12 @@
 
 ### \<목록>
 
-- [Aladdin Open API](/Aladdin)
-  - [중고상품 보유 매장 검색 (2023.08.05)](/Aladdin/README.md#중고상품-보유-매장-검색-20230805)
-- [Phantom Of The Library](/PhantLib)  
-  네이버 도서 페이지 개편으로 재작성 예정
-  - [~~네이버 도서분류 체계 크롤링 (2022.01.16)~~](/PhantLib/src/PhantLib#네이버-도서분류-체계-크롤링-20220116)  
-  &nbsp;- [~~특수문자 포함한 책 제목 검색시 오류 해결 (2022.01.31)~~](/PhantLib/src/PhantLib#--특수문자-포함한-책-제목-검색시-오류-해결-20220131)
+  - [Aladdin Open API](/Aladdin)
+    - [중고상품 보유 매장 검색 (2023.08.05)](/Aladdin/README.md#중고상품-보유-매장-검색-20230805)
+  - [Phantom Of The Library](/PhantLib)  
+    네이버 도서 페이지 개편으로 재작성 예정
+    - [~~네이버 도서분류 체계 크롤링 (2022.01.16)~~](/PhantLib/src/PhantLib#네이버-도서분류-체계-크롤링-20220116)  
+    &nbsp;- [~~특수문자 포함한 책 제목 검색시 오류 해결 (2022.01.31)~~](/PhantLib/src/PhantLib#--특수문자-포함한-책-제목-검색시-오류-해결-20220131)
 
 
 <details>
