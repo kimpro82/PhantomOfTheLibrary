@@ -1,1 +1,3 @@
-/rsc/*
+__pycache__/
+
+/PhantLib/rsc/*
