@@ -98,7 +98,7 @@ def save_csv(_data_frame, _filename="aladin_used_book_list"):
     _seoul_timezone = pytz.timezone('Asia/Seoul')
     _time_stamp = datetime.datetime.now(_seoul_timezone).strftime("%Y%m%d_%H%M%S")
     _path = f"Data/{_filename}_{_time_stamp}.csv"
-    _data_frame.to_csv(_path, index = False)
+    _data_frame.to_csv(_path, index = False, encoding = 'utf-8-sig')
     print("파일 저장을 완료하였습니다. :", _path)
 
 
@@ -106,6 +106,7 @@ if __name__ == "__main__":
     # 검색할 중고상품 ItemIds
     ItemIds = [
         13267376,       # 주식투자 절대지식, 브렌트 펜폴드, 에디터, 2011
+        131765156,      # 주식투자 ETF로 시작하라, systrader79 외, 이레미디어, 2018
         219394356,      # 아웃퍼포머, 모튼 한센, 김영사, 2019
         259247,         # 크랙, Sky Hacker 외, 파워북, 2000
         260084          # 데미안, 헤르만 헤세, 민음사, 2000
