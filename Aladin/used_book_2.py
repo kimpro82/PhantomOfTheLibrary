@@ -13,16 +13,15 @@ Usage:
 
 
 import datetime
-import pytz
-import pprint
 import re
+import pytz
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 
 
 # 알라딘 중고상품 전체 검색
-def search_used_item_all(_ItemIds):
+def search_used_item_all(_ItemIds:list) -> list:
     """
     요청한 도서의 알라딘 중고상품 전체를 검색하여 정보를 수집하는 함수입니다.
 
@@ -42,7 +41,7 @@ def search_used_item_all(_ItemIds):
     for _ItemId in _ItemIds :
         # response 수신
         _params['ItemId'] = _ItemId
-        _response = requests.get(_url, params=_params)
+        _response = requests.get(_url, params=_params, timeout=1)
         _soup = BeautifulSoup(_response.text, "html.parser")
 
         # 마지막 페이지 번호 가져오기
@@ -54,7 +53,7 @@ def search_used_item_all(_ItemIds):
             try :
                 # 상품 정보 가져오기
                 _params['page'] = _page_num
-                _response = requests.get(_url, params=_params)
+                _response = requests.get(_url, params=_params, timeout=1)
                 _soup = BeautifulSoup(_response.text, "html.parser")
                 _books_table = _soup.find("div", class_="Ere_usedsell_table").find_all("tr")
 
@@ -80,9 +79,9 @@ def search_used_item_all(_ItemIds):
                     _one_book_data = [_title, _grade, _price, _discount, _delivery, _seller, _seller_grade]
                     _book_data.append(_one_book_data)
 
-            except :
-                print("검색 결과를 가져오지 못 했습니다.")
-                _data.append("Failed")
+            except Exception as e:
+                print("검색 결과를 가져오지 못 했습니다:", e)
+                _book_data.append("Failed")
 
     return _book_data
 
@@ -98,7 +97,7 @@ def save_csv(_data_frame, _filename="aladin_used_book_list"):
 
     _seoul_timezone = pytz.timezone('Asia/Seoul')
     _time_stamp = datetime.datetime.now(_seoul_timezone).strftime("%Y%m%d_%H%M%S")
-    _path = f"Data/{_filename}_{_time_stamp}.xlsx"
+    _path = f"Data/{_filename}_{_time_stamp}.csv"
     _data_frame.to_csv(_path, index = False)
     print("파일 저장을 완료하였습니다. :", _path)
 
@@ -119,4 +118,4 @@ if __name__ == "__main__":
     columns = ['상품명', '등급', '판매가', '할인률', '배송비', '판매자', '판매등급']
     df = pd.DataFrame(data = result, columns=columns)
     print(df)
-    save_csv(df, "aladin_used_book_list.csv")
+    save_csv(df, "aladin_used_book_list")
