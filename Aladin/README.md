@@ -19,8 +19,9 @@
 ## [전체 중고상품 정보 조회 (2023.12.28)](#목록)
 
   - `ItemId`(알라딘 고유 상품코드)를 기준으로 전체 중고상품 정보를 CSV 파일로 저장
-    - `ItemId`(알라딘 고유 상품코드) 및 `page`를 파라미터로 request를 발송
+    - 아래 URL에 대하여 Request 발송
       - URL : `https://www.aladin.co.kr/shop/UsedShop/wuseditemall.aspx?`
+      - Parameters : `ItemId`(알라딘 고유 상품코드) `page`
     - 상품 조회 API(`ItemLookUp`)는 위의 URL를 반환할 뿐이므로 직접 크롤링 수행
     - 저장 항목(7) : `상품명` `등급` `판매가` `할인률` `배송비` `판매자` `판매등급`
 
