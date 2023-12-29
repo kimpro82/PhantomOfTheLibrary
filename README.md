@@ -1,6 +1,6 @@
 # Phantom Of The Library
 
-──였지만 개편 중
+──였지만 개편 중 ([☞ 舊 README.md 문서](/README_Old.md))
 
 
 ### \<목록>
@@ -11,7 +11,7 @@
 
 
   <details>
-    <summary>舊 문서 개요</summary>
+    <summary>舊 목록</summary>
 
   - [Phantom Of The Library](/PhantLib)
 
