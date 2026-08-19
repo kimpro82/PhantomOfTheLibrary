@@ -41,7 +41,7 @@ def search_used_item_all(_ItemIds:list) -> list:
     for _ItemId in _ItemIds :
         # response 수신
         _params['ItemId'] = _ItemId
-        _response = requests.get(_url, params=_params, timeout=1)
+        _response = requests.get(_url, params=_params, timeout=3)
         _soup = BeautifulSoup(_response.text, "html.parser")
 
         # 마지막 페이지 번호 가져오기
@@ -53,7 +53,7 @@ def search_used_item_all(_ItemIds:list) -> list:
             try :
                 # 상품 정보 가져오기
                 _params['page'] = _page_num
-                _response = requests.get(_url, params=_params, timeout=1)
+                _response = requests.get(_url, params=_params, timeout=3)
                 _soup = BeautifulSoup(_response.text, "html.parser")
                 _books_table = _soup.find("div", class_="Ere_usedsell_table").find_all("tr")
 
