@@ -10,8 +10,8 @@ History:
 2026.08.18  v2.1    YAML 파일에서 ItemId 목록을 불러오는 기능 추가 및 코드 개선
 
 Usage:
-    python3 used_book_2.py <yaml_file_path>
-    예시: python3 used_book_2.py 20260818.yaml
+    python3 used_book_2_1.py <yaml_file_path>
+    예시: python3 used_book_2_1.py 20260818.yaml
 """
 
 import argparse
